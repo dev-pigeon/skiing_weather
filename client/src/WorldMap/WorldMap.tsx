@@ -8,7 +8,6 @@ import {IconLayer} from '@deck.gl/layers';
 import BASEMAP from "./customMapStyles.json";
 import { Button } from "@mui/material";
 import MapLibreGL from "maplibre-gl";
-import resorts from "../../../data/resorts.json";
 
 
 MapLibreGL.setWorkerUrl("maplibre-gl-csp-worker.js"); // maplibre worker URL
@@ -25,7 +24,7 @@ function DeckGLOverlay(props: DeckProps) {
 
   const icon_layer = new IconLayer({
     id: "Resorts",
-    data: resorts,
+    data: "https://raw.githubusercontent.com/dev-pigeon/skiing_weather/refs/heads/main/data/resorts.json",
     getColor: () => [255, 140, 0],
     getIcon: () => 'marker',
     getSize: 40,
