@@ -1,5 +1,6 @@
 import {
 
+  Box,
     IconButton,
     Paper,
     Stack,
@@ -7,44 +8,48 @@ import {
     styled,
   } from "@mui/material";
   import Grid from '@mui/material/Grid2';
-  import { type PropsWithChildren, type ReactNode } from "react";
-  
+  import { Dispatch, SetStateAction, type PropsWithChildren, type ReactNode } from "react";
   import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import { SkiResort } from "../WorldMap/IconLayer";
+
+  interface MenuContainer {
+    setCurrentResort : Dispatch<SetStateAction<SkiResort | undefined>>
+    currentResort : SkiResort | undefined,
+  }
  
-  
-  export const MenuTemplate = ({
-    children
-  }: PropsWithChildren): ReactNode => {
+  export const MenuContainer = ({
+    children,
+    setCurrentResort,
+    currentResort
+  }: PropsWithChildren<MenuContainer>): ReactNode => {
     return (
-      <Grid position={"absolute"}  sx={{ zIndex: 9999, top:"25vh", left:"2vw" }} container>
+      <Grid position={"absolute"}  sx={{  zIndex: 9999, top:"25vh", left:"2vw" }} container>
         <Stack
           gap={1}
           component={MenuPaper}
           sx={{
-            width:"auto",
+            width:450,
             overflow: "auto",
             height:"auto",
             minWidth: 150,
           }}
         >
-          <Stack
-            direction="row"
-            sx={{
-              width: "100%",
-            }}
-          >
+         
+           
             <PrimaryColorTitle
               variant="h6"
               sx={{ margin: "auto", whiteSpace: "normal" }}
             >
-              {"title"}
+              {`${currentResort?.Resort}, ${currentResort?.Country}`}
             </PrimaryColorTitle>
-
-            <IconButton sx={{position:"absolute", top: -2.5, right: 2, "&:focus": { outline: "none" },}}>
+            
+            <Box>
+           <IconButton onClick={() => {setCurrentResort(undefined)}} sx={{wordBreak:"break",padding: 2,position:"absolute", top: -2.5, right: 2, "&:focus": { outline: "none" },}}>
                 <CancelOutlinedIcon/>
             </IconButton>
 
-          </Stack>
+            </Box>
+
           {children}
         </Stack>
       </Grid>
@@ -71,6 +76,8 @@ import {
   
   const PrimaryColorTypography = styled(Typography)(({ }) => ({
     color: "black",
+    whiteSpace:"normal",
+    padding:0,
   }));
   
   export const PrimaryColorTitle = styled(PrimaryColorTypography)(() => ({

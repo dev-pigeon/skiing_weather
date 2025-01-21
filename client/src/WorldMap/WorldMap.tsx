@@ -4,11 +4,12 @@ import  { StyleSpecification } from "maplibre-gl";
 import { DeckProps, MapViewState } from "deck.gl";
 import { MapboxOverlay } from "@deck.gl/mapbox";
 import { defaultMapPosition } from "./defaultMapPosition";
-import {IconLayer} from '@deck.gl/layers';
 import BASEMAP from "./customMapStyles.json";
 import { Button } from "@mui/material";
 import MapLibreGL from "maplibre-gl";
-import { MenuTemplate } from "../menu/MenuTemplate";
+import { MenuContainer } from "../menu/MenuContainer";
+import ResortIconLayer, { SkiResort } from "./IconLayer";
+import ResortDisplay from "../menu/ResortDisplay";
 
 
 MapLibreGL.setWorkerUrl("maplibre-gl-csp-worker.js"); // maplibre worker URL
@@ -19,24 +20,12 @@ function DeckGLOverlay(props: DeckProps) {
     return null;
   }
 
-  const ICON_MAPPING = {
-    marker: {x: 0, y: 0, width: 128, height: 128, mask: true}
-  };
-
-  const icon_layer = new IconLayer({
-    id: "Resorts",
-    data: "https://raw.githubusercontent.com/dev-pigeon/skiing_weather/refs/heads/main/data/resorts.json",
-    getColor: () => [255, 140, 0],
-    getIcon: () => 'marker',
-    getSize: 40,
-    getPosition: (d) => d.coordinates.map(parseFloat),
-    pickable: true,
-    iconAtlas: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png',
-    iconMapping: ICON_MAPPING,
-    onHover: (icon) => console.log(icon.object),
-  });
-
-function WorldMap() {
+  
+  function WorldMap() {
+    
+    const [currentResort, setCurrentResort] = useState<SkiResort | undefined>(undefined);
+    const ResortLayer = ResortIconLayer({setCurrentResort});
+  
   const [mapViewState, setMapViewState] = useState({
     longitude: defaultMapPosition.longitude,
     latitude: defaultMapPosition.latitude,
@@ -55,8 +44,11 @@ function WorldMap() {
       //@ts-ignore
       mapStyle={BASEMAP.SATELLITE as StyleSpecification}
     >
-     <DeckGLOverlay layers={[icon_layer]}/>
-     <MenuTemplate>
+     <DeckGLOverlay layers={[ResortLayer.icon_layer]}/>
+
+     {currentResort != undefined && (
+     <MenuContainer setCurrentResort={setCurrentResort} currentResort={currentResort}>
+      <ResortDisplay currentResort={currentResort}/>
      <Button
         variant="contained"
         style={{   
@@ -66,7 +58,9 @@ function WorldMap() {
         PRESS M
       </Button>
 
-     </MenuTemplate>
+     </MenuContainer>
+
+     )}
     </Map>
   );
 }
