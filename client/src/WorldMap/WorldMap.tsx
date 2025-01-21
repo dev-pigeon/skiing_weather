@@ -49,15 +49,6 @@ function DeckGLOverlay(props: DeckProps) {
      {currentResort != undefined && (
      <MenuContainer setCurrentResort={setCurrentResort} currentResort={currentResort}>
       <ResortDisplay currentResort={currentResort}/>
-     <Button
-        variant="contained"
-        style={{   
-        zIndex: 1,
-        }}
-      >
-        PRESS M
-      </Button>
-
      </MenuContainer>
 
      )}
