@@ -8,6 +8,7 @@ import {IconLayer} from '@deck.gl/layers';
 import BASEMAP from "./customMapStyles.json";
 import { Button } from "@mui/material";
 import MapLibreGL from "maplibre-gl";
+import { MenuTemplate } from "../menu/MenuTemplate";
 
 
 MapLibreGL.setWorkerUrl("maplibre-gl-csp-worker.js"); // maplibre worker URL
@@ -32,6 +33,7 @@ function DeckGLOverlay(props: DeckProps) {
     pickable: true,
     iconAtlas: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png',
     iconMapping: ICON_MAPPING,
+    onHover: (icon) => console.log(icon.object),
   });
 
 function WorldMap() {
@@ -54,17 +56,17 @@ function WorldMap() {
       mapStyle={BASEMAP.SATELLITE as StyleSpecification}
     >
      <DeckGLOverlay layers={[icon_layer]}/>
+     <MenuTemplate>
      <Button
         variant="contained"
-        style={{
-          position: "absolute",
-          bottom:"10px",
-          left: "46vw",
-          zIndex: 1,
+        style={{   
+        zIndex: 1,
         }}
       >
-        PRESS ME
+        PRESS M
       </Button>
+
+     </MenuTemplate>
     </Map>
   );
 }
