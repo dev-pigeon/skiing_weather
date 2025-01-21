@@ -36,15 +36,17 @@ import { SkiResort } from "../WorldMap/IconLayer";
         >
          
            
+            <Box textAlign={"center"} width={"80%"}>
             <PrimaryColorTitle
               variant="h6"
               sx={{ margin: "auto", whiteSpace: "normal" }}
             >
               {`${currentResort?.Resort}, ${currentResort?.Country}`}
             </PrimaryColorTitle>
+            </Box>
             
             <Box>
-           <IconButton onClick={() => {setCurrentResort(undefined)}} sx={{wordBreak:"break",padding: 2,position:"absolute", top: -2.5, right: 2, "&:focus": { outline: "none" },}}>
+           <IconButton onClick={() => {setCurrentResort(undefined)}} sx={{wordBreak:"break",position:"absolute", top: -2.5, right: 2, "&:focus": { outline: "none" },}}>
                 <CancelOutlinedIcon/>
             </IconButton>
 
