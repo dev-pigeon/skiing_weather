@@ -5,7 +5,6 @@ import { DeckProps, MapViewState } from "deck.gl";
 import { MapboxOverlay } from "@deck.gl/mapbox";
 import { defaultMapPosition } from "./defaultMapPosition";
 import BASEMAP from "./customMapStyles.json";
-import { Button } from "@mui/material";
 import MapLibreGL from "maplibre-gl";
 import { MenuContainer } from "../menu/MenuContainer";
 import ResortIconLayer, { SkiResort } from "./IconLayer";

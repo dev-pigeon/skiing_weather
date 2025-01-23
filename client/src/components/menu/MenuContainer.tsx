@@ -23,7 +23,7 @@ import { SkiResort } from "../WorldMap/IconLayer";
     currentResort
   }: PropsWithChildren<MenuContainer>): ReactNode => {
     return (
-      <Grid position={"absolute"}  sx={{  zIndex: 9999, top:"25vh", left:"2vw" }} container>
+      <Grid position={"absolute"} columns={{md:3}} sx={{  zIndex: 9999, top:"25vh", left:"2vw" }} container>
         <Stack
           gap={1}
           component={MenuPaper}
@@ -33,9 +33,7 @@ import { SkiResort } from "../WorldMap/IconLayer";
             height:"auto",
             minWidth: 150,
           }}
-        >
-         
-           
+        >           
             <Box textAlign={"center"} width={"80%"}>
             <PrimaryColorTitle
               variant="h6"
@@ -51,7 +49,6 @@ import { SkiResort } from "../WorldMap/IconLayer";
             </IconButton>
 
             </Box>
-
           {children}
         </Stack>
       </Grid>
