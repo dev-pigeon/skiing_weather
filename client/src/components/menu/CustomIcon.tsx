@@ -12,11 +12,7 @@ interface CustomIcon extends SvgIconProps {
 const CustomIcon = ({svgPath, viewBox, displayData, toolTip, ttBottom} : CustomIcon) => {
     return (
         <Stack direction={"row"} spacing={1}>
-      <Tooltip title={toolTip ? toolTip : ""} arrow placement={ttBottom ? "bottom" : "top"} sx={{
-                    '& .MuiTooltip-tooltip': {
-                        backgroundColor: 'orange', // Change tooltip background color
-                    }
-                }}>
+      <Tooltip title={toolTip ? toolTip : ""} arrow placement={ttBottom ? "bottom" : "top"}>
         <SvgIcon fontSize="large" sx={{fill:"black"}} viewBox={viewBox ? viewBox : "0 0 1024 1024"} >
             <path d={svgPath}/>
         </SvgIcon>
