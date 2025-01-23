@@ -2,7 +2,7 @@ import { SkiResort } from "../WorldMap/IconLayer";
 import { Box, Stack, Typography } from "@mui/material";
 import Grid from '@mui/material/Grid2';
 import TextGroup from "./TextGroup";
-import GridTextItem from "./TextItem";
+import TextItem from "./TextItem";
 
 interface ResortDisplay {
     currentResort : SkiResort,
@@ -14,8 +14,8 @@ interface ResortDisplay {
         <Grid container columns={{md:12}} rowSpacing={3}>
 
           <TextGroup>
-            <GridTextItem data={`Average season: ${currentResort.Season}`}/>
-            <GridTextItem data={`Average Pass Price: ${(parseInt(currentResort.Price) * 1.04).toFixed(2)}$`}/>
+            <TextItem data={`Average season: ${currentResort.Season}`}/>
+            <TextItem data={`Average Pass Price: ${(parseInt(currentResort.Price) * 1.04).toFixed(2)}$`}/>
           </TextGroup>
           
             <Grid size={4}>
@@ -26,13 +26,13 @@ interface ResortDisplay {
 
 
           <TextGroup>
-            <GridTextItem data={`Highest point: ${currentResort["Highest point"]} meters`}/>
-            <GridTextItem data={`Lowest point: ${currentResort["Lowest point"]} meters`}/>
+            <TextItem data={`Highest point: ${currentResort["Highest point"]} meters`}/>
+            <TextItem data={`Lowest point: ${currentResort["Lowest point"]} meters`}/>
           </TextGroup>
 
           <TextGroup>
-            <GridTextItem data={`Snow cannons: ${currentResort["Snow cannons"]}`}/>
-            <GridTextItem data={`Longest run: ${currentResort["Longest run"]} kilometers`}/>
+            <TextItem data={`Snow cannons: ${currentResort["Snow cannons"]}`}/>
+            <TextItem data={`Longest run: ${currentResort["Longest run"]} kilometers`}/>
           </TextGroup>
 
             <Grid size={4}>
@@ -41,13 +41,10 @@ interface ResortDisplay {
               </Box>
             </Grid>
 
-
           <TextGroup>
-            <GridTextItem data={`Night skiing: ${currentResort.Nightskiing}`}/>
-            <GridTextItem data={`Summer skiing: ${currentResort["Summer skiing"]}`}/>
+            <TextItem data={`Night skiing: ${currentResort.Nightskiing}`}/>
+            <TextItem data={`Summer skiing: ${currentResort["Summer skiing"]}`}/>
           </TextGroup>
-
-  
         </Grid>
     )
   }

@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 
 
-interface GridTextItem {
+interface TextItem {
     data : number | string,
     dataAdornment?: string,
     icon? : any, // not sure what the actual type is yet
@@ -11,11 +11,11 @@ interface GridTextItem {
     sx?: object,
 }
 
-const GridTextItem = ({data}:GridTextItem) => {
+const TextItem = ({data}:TextItem) => {
     // this is really overkill right now but will include more stuff later
     return (
         <Typography>{data}</Typography>
     )
 }
 
-export default GridTextItem;
+export default TextItem;
