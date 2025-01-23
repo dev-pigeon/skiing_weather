@@ -1,10 +1,10 @@
-import { Typography } from '@mui/material';
+import { Typography, Box, SvgIconProps } from '@mui/material';
 
 
 interface TextItem {
     data : number | string,
     dataAdornment?: string,
-    icon? : any, // not sure what the actual type is yet
+    icon? : SvgIconProps, // not sure what the actual type is yet
     iconAtEnd?:boolean,
     iconAtStart?:boolean,
     tooltip?: string,
@@ -12,9 +12,11 @@ interface TextItem {
 }
 
 const TextItem = ({data}:TextItem) => {
-    // this is really overkill right now but will include more stuff later
+  
     return (
-        <Typography>{data}</Typography>
+       <Box >
+         <Typography  >{data}</Typography>
+       </Box>
     )
 }
 
