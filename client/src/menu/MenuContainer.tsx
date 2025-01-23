@@ -1,4 +1,5 @@
 import {
+
   Box,
     IconButton,
     Paper,
@@ -22,7 +23,7 @@ import { SkiResort } from "../WorldMap/IconLayer";
     currentResort
   }: PropsWithChildren<MenuContainer>): ReactNode => {
     return (
-      <Grid position={"absolute"} columns={{md:3}} sx={{  top:"25vh", left:"2vw" }} container>
+      <Grid position={"absolute"} columns={{md:3}} sx={{  zIndex: 9999, top:"25vh", left:"2vw" }} container>
         <Stack
           gap={1}
           component={MenuPaper}
@@ -44,8 +45,9 @@ import { SkiResort } from "../WorldMap/IconLayer";
             
             <Box>
            <IconButton onClick={() => {setCurrentResort(undefined)}} sx={{wordBreak:"break",position:"absolute", top: -2.5, right: 2, "&:focus": { outline: "none" },}}>
-              <CancelOutlinedIcon/>
+                <CancelOutlinedIcon/>
             </IconButton>
+
             </Box>
           {children}
         </Stack>
