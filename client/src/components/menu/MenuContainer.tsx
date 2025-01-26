@@ -68,7 +68,7 @@ import { SkiResort } from "../WorldMap/IconLayer";
     pointerEvents: "all",
     borderRadius: 20,
     overflowWrap: "break-word",
-    zIndex: 9999,
+    zIndex: 90,
   }));
   
   const PrimaryColorTypography = styled(Typography)(({ }) => ({

@@ -5,6 +5,7 @@ import TextGroup from "./TextGroup";
 import TextItem from "./TextItem";
 import TriangleContainer from "./TriangleContainer";
 import CustomIcon from "./CustomIcon";
+import DifficultyChart from "./PieChart";
 
 interface ResortDisplay {
     currentResort : SkiResort,
@@ -38,11 +39,8 @@ interface ResortDisplay {
           </TextGroup>
 
         
-          <TriangleContainer>
-            <TextItem data={`meters`}/>
-            <TextItem data={`meters`}/>
-            <TextItem data={`meters`}/>
-          </TriangleContainer>
+        {/* gonna put a pie chart there */}
+         <DifficultyChart currentResort={currentResort}/>
 
           <TextGroup>
             <TextItem data={`Night skiing: ${currentResort.Nightskiing}`}/>
