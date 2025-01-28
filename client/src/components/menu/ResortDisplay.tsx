@@ -8,6 +8,7 @@ import { Typography } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuCard from "./MenuCard";
+import TextItem from "./TextItem";
 
 interface ResortDisplay {
     currentResort : SkiResort,
@@ -22,60 +23,31 @@ interface ResortDisplay {
           <Typography variant="h6" gutterBottom>
             Resort Features
           </Typography>
-            <Typography>
-              <strong>Snow Cannons:</strong> 36
-            </Typography>
-              <Typography>
-                <strong>Night Skiing:</strong>{" "}
-                <CloseIcon color="error" fontSize="small" />
-            </Typography>
-            <Typography>
-                <strong>Day Skiing:</strong>{" "}
-                <CheckIcon color="success" fontSize="small" />
-            </Typography>
-            <Typography>
-               <strong>Longest Run:</strong> 7 km
-             </Typography>
-
+           <TextItem title="Snow Cannons: " data={currentResort["Snow cannons"]}/>
+           <TextItem title="Night Skiing: " data={currentResort.Nightskiing}/>
+           <TextItem title="Summer Skiing: " data={currentResort["Summer skiing"]}/>
+           <TextItem title="Longest Run: " data={currentResort["Longest run"]}/>
           </MenuCard>
           
         <MenuCard gridSize={6}>
-      <Typography variant="h6" gutterBottom>
-        Resort Features
+        <Typography variant="h6" gutterBottom>
+        Season & Pricing
       </Typography>
-      <Typography>
-        <strong>Snow Cannons:</strong> {currentResort["Snow cannons"]}
-      </Typography>
-      <Typography>
-        <strong>Night Skiing:</strong> 
-        {currentResort.Nightskiing ? (
-          <CheckIcon color="success" fontSize="small" />
-        ) : (
-          <CloseIcon color="error" fontSize="small" />
-        )}
-      </Typography>
-      <Typography>
-        <strong>Longest Run:</strong> {currentResort["Longest run"]} km
-      </Typography>
-
+      <TextItem title="Season Start: " data={currentResort.Season}/>
+      <TextItem title="Season End: " data={currentResort.Season}/>
+      <TextItem title="Pass Price: " data={`$${currentResort.Price}`}/>
       </MenuCard>
 
     
         <MenuCard gridSize={7}>
-            <Typography variant="h6" gutterBottom>
-              Mountain Stats
-            </Typography>
-            <Typography>
-              <strong>Highest Point:</strong> {currentResort["Highest point"]} m
-            </Typography>
-            <Typography>
-              <strong>Lowest Point:</strong> {currentResort["Lowest point"]} m
-            </Typography>
-
+          <Typography variant="h6" gutterBottom>
+             Mountain Stats
+          </Typography>
+          <TextItem title="Highest Point: " data={currentResort["Highest point"]} dataAdornment="m"/>
+          <TextItem title="Lowest Point: " data={currentResort["Lowest point"]} dataAdornment="m"/>
         </MenuCard>
         
-    
-    
+  
       <TriangleContainer>
       <CustomIcon toolTip={`Surface Lifts`} svgPath={IconPaths.SurfaceLift.path} displayData={currentResort["Surface lifts"]} />
     <CustomIcon toolTip="Chair Lifts" svgPath={IconPaths.ChairLift.path} displayData={currentResort["Chair lifts"]} />
