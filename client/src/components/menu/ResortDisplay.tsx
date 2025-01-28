@@ -4,9 +4,10 @@ import Grid from '@mui/material/Grid2';
 import TriangleContainer from "./TriangleContainer";
 import CustomIcon from "./CustomIcon";
 import DifficultyChart from "./PieChart";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
+import MenuCard from "./MenuCard";
 
 interface ResortDisplay {
     currentResort : SkiResort,
@@ -15,35 +16,30 @@ interface ResortDisplay {
   const ResortDisplay = ({currentResort} : ResortDisplay) => {
 
     return (
-        <Grid container columns={{md:12}} rowSpacing={1} columnSpacing={0}>
-          
-        <Grid size={6} padding={2}>
-          <Card sx={{ boxShadow: 2, borderRadius: 2 }}>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Resort Features
-              </Typography>
-              <Typography>
-                <strong>Snow Cannons:</strong> 36
-              </Typography>
+      <Grid container columns={{md:12}} rowSpacing={1} columnSpacing={0}>
+
+        <MenuCard gridSize={6}>
+          <Typography variant="h6" gutterBottom>
+            Resort Features
+          </Typography>
+            <Typography>
+              <strong>Snow Cannons:</strong> 36
+            </Typography>
               <Typography>
                 <strong>Night Skiing:</strong>{" "}
                 <CloseIcon color="error" fontSize="small" />
-              </Typography>
-              <Typography>
+            </Typography>
+            <Typography>
                 <strong>Day Skiing:</strong>{" "}
                 <CheckIcon color="success" fontSize="small" />
-              </Typography>
-              <Typography>
-                <strong>Longest Run:</strong> 7 km
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
+            </Typography>
+            <Typography>
+               <strong>Longest Run:</strong> 7 km
+             </Typography>
 
-        <Grid size={6} padding={2}>
-      <Card sx={{ boxShadow: 2, borderRadius: 2 }}>
-      <CardContent>
+          </MenuCard>
+          
+        <MenuCard gridSize={6}>
       <Typography variant="h6" gutterBottom>
         Resort Features
       </Typography>
@@ -61,14 +57,11 @@ interface ResortDisplay {
       <Typography>
         <strong>Longest Run:</strong> {currentResort["Longest run"]} km
       </Typography>
-    </CardContent>
-  </Card>
-</Grid>
 
-         
-        <Grid size={7} padding={2}>
-        <Card sx={{ boxShadow: 2, borderRadius: 2 }}>
-          <CardContent>
+      </MenuCard>
+
+    
+        <MenuCard gridSize={7}>
             <Typography variant="h6" gutterBottom>
               Mountain Stats
             </Typography>
@@ -78,9 +71,9 @@ interface ResortDisplay {
             <Typography>
               <strong>Lowest Point:</strong> {currentResort["Lowest point"]} m
             </Typography>
-          </CardContent>
-        </Card>
-      </Grid>
+
+        </MenuCard>
+        
     
     
       <TriangleContainer>
@@ -91,8 +84,7 @@ interface ResortDisplay {
 
  
       <DifficultyChart currentResort={currentResort} />
- 
-         
+  
         </Grid>
     )
   }
