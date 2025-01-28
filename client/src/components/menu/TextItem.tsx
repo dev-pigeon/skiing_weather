@@ -10,13 +10,14 @@ interface TextItem {
     iconAtStart?:boolean,
     tooltip?: string,
     sx?: object,
+    whiteSpace? : string
 }
 
-const TextItem = ({data, title, dataAdornment, icon}:TextItem) => {
+const TextItem = ({data, title, dataAdornment, icon, whiteSpace}:TextItem) => {
   
     return (
        <Stack direction={"row"} spacing={1}>
-         <Typography >
+         <Typography whiteSpace={whiteSpace ? whiteSpace : undefined} >
             <span style={{fontWeight:"bold"}}>{title}</span>
             {data}
             {dataAdornment}

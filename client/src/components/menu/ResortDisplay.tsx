@@ -10,6 +10,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import MenuCard from "./MenuCard";
 import TextItem from "./TextItem";
 import LandscapeTwoToneIcon from '@mui/icons-material/LandscapeTwoTone';
+import AcUnitIcon from '@mui/icons-material/AcUnit';
 
 
 interface ResortDisplay {
@@ -25,7 +26,7 @@ interface ResortDisplay {
           <Typography variant="h6" gutterBottom>
             Resort Features
           </Typography>
-           <TextItem title="Snow Cannons: " data={currentResort["Snow cannons"]}/>
+           <TextItem whiteSpace="nowrap" title="Snow Cannons: " data={currentResort["Snow cannons"]} icon={<AcUnitIcon sx={{fill:"blue"}}/>}/>
            <TextItem title="Night Skiing: " data={""}  icon={currentResort.Nightskiing == "Yes" ? <CheckIcon sx={{fill:"green"}}/> : <CloseIcon sx={{fill:"red"}}/>}/>
            <TextItem title="Summer Skiing: " data={""} icon={currentResort["Summer skiing"] == "Yes" ? <CheckIcon sx={{fill:"green"}}/> : <CloseIcon sx={{fill:"red"}}/>}/>
            <TextItem title="Longest Run: " data={currentResort["Longest run"]} dataAdornment="km"/>
