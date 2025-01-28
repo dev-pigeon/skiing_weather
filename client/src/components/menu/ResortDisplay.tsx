@@ -9,6 +9,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuCard from "./MenuCard";
 import TextItem from "./TextItem";
+import LandscapeTwoToneIcon from '@mui/icons-material/LandscapeTwoTone';
 
 
 interface ResortDisplay {
@@ -44,8 +45,8 @@ interface ResortDisplay {
           <Typography variant="h6" gutterBottom>
              Mountain Stats
           </Typography>
-          <TextItem title="Highest Point: " data={currentResort["Highest point"]} dataAdornment="m"/>
-          <TextItem title="Lowest Point: " data={currentResort["Lowest point"]} dataAdornment="m"/>
+          <TextItem title="Highest Point: " data={currentResort["Highest point"]} dataAdornment="m" icon={<LandscapeTwoToneIcon/>}/>
+          <TextItem title="Lowest Point: " data={currentResort["Lowest point"]} dataAdornment="m" icon={<LandscapeTwoToneIcon/>}/>
         </MenuCard>
         
   
