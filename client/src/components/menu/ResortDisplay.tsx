@@ -10,6 +10,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import MenuCard from "./MenuCard";
 import TextItem from "./TextItem";
 
+
 interface ResortDisplay {
     currentResort : SkiResort,
   }
@@ -24,9 +25,9 @@ interface ResortDisplay {
             Resort Features
           </Typography>
            <TextItem title="Snow Cannons: " data={currentResort["Snow cannons"]}/>
-           <TextItem title="Night Skiing: " data={currentResort.Nightskiing}/>
-           <TextItem title="Summer Skiing: " data={currentResort["Summer skiing"]}/>
-           <TextItem title="Longest Run: " data={currentResort["Longest run"]}/>
+           <TextItem title="Night Skiing: " data={""}  icon={currentResort.Nightskiing == "Yes" ? <CheckIcon sx={{fill:"green"}}/> : <CloseIcon sx={{fill:"red"}}/>}/>
+           <TextItem title="Summer Skiing: " data={""} icon={currentResort["Summer skiing"] == "Yes" ? <CheckIcon sx={{fill:"green"}}/> : <CloseIcon sx={{fill:"red"}}/>}/>
+           <TextItem title="Longest Run: " data={currentResort["Longest run"]} dataAdornment="km"/>
           </MenuCard>
           
         <MenuCard gridSize={6}>
