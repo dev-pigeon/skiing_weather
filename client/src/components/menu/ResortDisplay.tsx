@@ -6,6 +6,9 @@ import TextItem from "./TextItem";
 import TriangleContainer from "./TriangleContainer";
 import CustomIcon from "./CustomIcon";
 import DifficultyChart from "./PieChart";
+import { Card, CardContent, Typography } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface ResortDisplay {
     currentResort : SkiResort,
@@ -14,38 +17,84 @@ interface ResortDisplay {
   const ResortDisplay = ({currentResort} : ResortDisplay) => {
 
     return (
-        <Grid container columns={{md:12}} rowSpacing={3}>
-          <TextGroup>
-            <TextItem data={`Average season: ${currentResort.Season}`}/>
-            <TextItem data={`Average Pass Price: ${(parseInt(currentResort.Price) * 1.04).toFixed(2)}$`}/>
-          </TextGroup>
-
-          <TriangleContainer>
-            <CustomIcon toolTip={`Surface Lifts` } svgPath={IconPaths.SurfaceLift.path} displayData={currentResort["Surface lifts"]}/>
-            <CustomIcon toolTip="Chair Lifts" svgPath={IconPaths.ChairLift.path} displayData={currentResort["Chair lifts"]}/>
-            <CustomIcon ttBottom toolTip="Gondola Lifts" viewBox="0 0 60 60" svgPath={IconPaths.Gondola.path} displayData={currentResort["Gondola lifts"]}/>
-          </TriangleContainer>
-
+        <Grid container columns={{md:12}} rowSpacing={1} columnSpacing={0}>
           
-          
-          <TextGroup>
-            <TextItem data={`Highest point: ${currentResort["Highest point"]} meters`}/>
-            <TextItem data={`Lowest point: ${currentResort["Lowest point"]} meters`}/>
-          </TextGroup>
+        <Grid size={6} padding={2}>
+          <Card sx={{ boxShadow: 2, borderRadius: 2 }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Resort Features
+              </Typography>
+              <Typography>
+                <strong>Snow Cannons:</strong> 36
+              </Typography>
+              <Typography>
+                <strong>Night Skiing:</strong>{" "}
+                <CloseIcon color="error" fontSize="small" />
+              </Typography>
+              <Typography>
+                <strong>Day Skiing:</strong>{" "}
+                <CheckIcon color="success" fontSize="small" />
+              </Typography>
+              <Typography>
+                <strong>Longest Run:</strong> 7 km
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
 
-          <TextGroup>
-            <TextItem data={`Snow cannons: ${currentResort["Snow cannons"]}`}/>
-            <TextItem data={`Longest run: ${currentResort["Longest run"]} kilometers`}/>
-          </TextGroup>
+        <Grid size={6} padding={2}>
+      <Card sx={{ boxShadow: 2, borderRadius: 2 }}>
+      <CardContent>
+      <Typography variant="h6" gutterBottom>
+        Resort Features
+      </Typography>
+      <Typography>
+        <strong>Snow Cannons:</strong> {currentResort["Snow cannons"]}
+      </Typography>
+      <Typography>
+        <strong>Night Skiing:</strong> 
+        {currentResort.Nightskiing ? (
+          <CheckIcon color="success" fontSize="small" />
+        ) : (
+          <CloseIcon color="error" fontSize="small" />
+        )}
+      </Typography>
+      <Typography>
+        <strong>Longest Run:</strong> {currentResort["Longest run"]} km
+      </Typography>
+    </CardContent>
+  </Card>
+</Grid>
 
-        
-        {/* gonna put a pie chart there */}
-         <DifficultyChart currentResort={currentResort}/>
+         
+        <Grid size={7} padding={2}>
+        <Card sx={{ boxShadow: 2, borderRadius: 2 }}>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              Mountain Stats
+            </Typography>
+            <Typography>
+              <strong>Highest Point:</strong> {currentResort["Highest point"]} m
+            </Typography>
+            <Typography>
+              <strong>Lowest Point:</strong> {currentResort["Lowest point"]} m
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+    
+    
+      <TriangleContainer>
+      <CustomIcon toolTip={`Surface Lifts`} svgPath={IconPaths.SurfaceLift.path} displayData={currentResort["Surface lifts"]} />
+    <CustomIcon toolTip="Chair Lifts" svgPath={IconPaths.ChairLift.path} displayData={currentResort["Chair lifts"]} />
+    <CustomIcon toolTip="Gondola Lifts" viewBox="0 0 60 60" svgPath={IconPaths.Gondola.path} displayData={currentResort["Gondola lifts"]} />
+  </TriangleContainer>
 
-          <TextGroup>
-            <TextItem data={`Night skiing: ${currentResort.Nightskiing}`}/>
-            <TextItem data={`Summer skiing: ${currentResort["Summer skiing"]}`}/>
-          </TextGroup>
+ 
+      <DifficultyChart currentResort={currentResort} />
+ 
+         
         </Grid>
     )
   }

@@ -22,7 +22,7 @@ import { SkiResort } from "../WorldMap/IconLayer";
     currentResort
   }: PropsWithChildren<MenuContainer>): ReactNode => {
     return (
-      <Grid position={"absolute"} columns={{md:3}} sx={{  top:"25vh", left:"2vw" }} container>
+      <Grid position={"absolute"} columns={{md:3}} sx={{  top:"15vh", left:"2vw" }} container>
         <Stack
           gap={1}
           component={MenuPaper}
