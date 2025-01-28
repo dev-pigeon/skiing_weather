@@ -1,8 +1,6 @@
 import { SkiResort } from "../WorldMap/IconLayer";
 import IconPaths from "../../assets/IconPaths";
 import Grid from '@mui/material/Grid2';
-import TextGroup from "./TextGroup";
-import TextItem from "./TextItem";
 import TriangleContainer from "./TriangleContainer";
 import CustomIcon from "./CustomIcon";
 import DifficultyChart from "./PieChart";
@@ -89,7 +87,7 @@ interface ResortDisplay {
       <CustomIcon toolTip={`Surface Lifts`} svgPath={IconPaths.SurfaceLift.path} displayData={currentResort["Surface lifts"]} />
     <CustomIcon toolTip="Chair Lifts" svgPath={IconPaths.ChairLift.path} displayData={currentResort["Chair lifts"]} />
     <CustomIcon toolTip="Gondola Lifts" viewBox="0 0 60 60" svgPath={IconPaths.Gondola.path} displayData={currentResort["Gondola lifts"]} />
-  </TriangleContainer>
+    </TriangleContainer>
 
  
       <DifficultyChart currentResort={currentResort} />
