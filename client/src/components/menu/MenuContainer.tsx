@@ -30,14 +30,14 @@ export const MenuContainer = ({
     <Grid
       position={"absolute"}
       columns={{ md: 3 }}
-      sx={{ top: "15vh", left: "2vw" }}
+      sx={{ top: "5vh", left: "2vw" }}
       container
     >
       <Stack
         gap={1}
         component={MenuPaper}
         sx={{
-          width: 550,
+          width: "40vw",
           overflow: "auto",
           height: "auto",
           minWidth: 150,

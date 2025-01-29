@@ -11,24 +11,22 @@ const MenuCard = ({ children, gridSize, sx }: PropsWithChildren<MenuCard>) => {
   const [isMouseOver, setIsMouseOver] = useState<boolean>(false);
 
   return (
-    <Grid size={gridSize} padding={2}>
-      <Card
-        onMouseLeave={() => {
-          setIsMouseOver(false);
-        }}
-        onMouseEnter={() => {
-          setIsMouseOver(true);
-        }}
-        sx={{
-          boxShadow: isMouseOver ? 20 : 2,
-          borderRadius: 5,
-          transition: "box-shadow 0.75s ease-in-out",
-          ...sx,
-        }}
-      >
-        <CardContent>{children}</CardContent>
-      </Card>
-    </Grid>
+    <Card
+      onMouseLeave={() => {
+        setIsMouseOver(false);
+      }}
+      onMouseEnter={() => {
+        setIsMouseOver(true);
+      }}
+      sx={{
+        boxShadow: isMouseOver ? 20 : 2,
+        borderRadius: 5,
+        transition: "box-shadow 0.75s ease-in-out",
+        ...sx,
+      }}
+    >
+      <CardContent>{children}</CardContent>
+    </Card>
   );
 };
 

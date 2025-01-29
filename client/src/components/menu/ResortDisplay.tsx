@@ -17,8 +17,18 @@ interface ResortDisplay {
 
 const ResortDisplay = ({ currentResort }: ResortDisplay) => {
   return (
-    <Grid container columns={{ md: 12 }} rowSpacing={1} columnSpacing={0}>
-      <MenuCard gridSize={5}>
+    <Stack
+      width={"100%"}
+      direction={"row"}
+      gap={1}
+      display={"flex"}
+      flexWrap={"wrap"}
+      justifyContent={"center"}
+      alignItems={"center"}
+      padding={2}
+      overflow={"auto"}
+    >
+      <MenuCard sx={{ width: 200 }} gridSize={5}>
         <Typography variant="h6" gutterBottom>
           Slopes & Lifts
         </Typography>
@@ -47,7 +57,7 @@ const ResortDisplay = ({ currentResort }: ResortDisplay) => {
         <DifficultyChart currentResort={currentResort} />
       </MenuCard>
 
-      <MenuCard gridSize={6}>
+      <MenuCard sx={{ width: 200 }} gridSize={6}>
         <Typography variant="h6" gutterBottom>
           Season & Pricing
         </Typography>
@@ -112,7 +122,7 @@ const ResortDisplay = ({ currentResort }: ResortDisplay) => {
           dataAdornment="km"
         />
       </MenuCard>
-    </Grid>
+    </Stack>
   );
 };
 export default ResortDisplay;
