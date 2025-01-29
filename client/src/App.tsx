@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import WorldMap from './WorldMap/WorldMap';
+import WorldMap from './components/WorldMap/WorldMap';
 
 function App() {
   return (

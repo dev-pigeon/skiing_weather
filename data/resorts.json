@@ -639,7 +639,7 @@
     },
     {
         "ID": "23",
-        "Resort": "Howelsen Hill-Steamboat Springs",
+        "Resort": "Steamboat Springs",
         "Country": "United States",
         "Continent": "North America",
         "Price": "21",
@@ -5946,7 +5946,7 @@
     },
     {
         "ID": "206",
-        "Resort": "Loveland",
+        "Resort": "Loveland Ski",
         "Country": "United States",
         "Continent": "North America",
         "Price": "61",
@@ -5970,7 +5970,7 @@
         "Summer skiing": "No",
         "coordinates": [
             "-105.0749801",
-            "40.3977612"
+            "39.3977612"
         ]
     },
     {
