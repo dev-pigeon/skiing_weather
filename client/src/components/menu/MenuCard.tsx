@@ -1,5 +1,5 @@
 import { PropsWithChildren, useState } from "react";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Divider, Typography } from "@mui/material";
 
 interface MenuCard {
   sx?: object;
@@ -26,9 +26,8 @@ const MenuCard = ({ children, sx, title }: PropsWithChildren<MenuCard>) => {
       }}
     >
       <CardContent>
-        <Typography variant="h6" gutterBottom>
-          {title}
-        </Typography>
+        <Typography variant="h6">{title}</Typography>
+        <Divider sx={{ bgcolor: "black" }} />
         {children}
       </CardContent>
     </Card>
