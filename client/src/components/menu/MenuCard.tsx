@@ -1,22 +1,35 @@
-import { PropsWithChildren } from "react"
-import Grid from '@mui/material/Grid2';
+import { PropsWithChildren, useState } from "react";
+import Grid from "@mui/material/Grid2";
 import { Card, CardContent } from "@mui/material";
 
-interface MenuCard{
-    gridSize : number,
-    sx? : object
+interface MenuCard {
+  gridSize: number;
+  sx?: object;
 }
 
-const MenuCard = ({children, gridSize, sx} : PropsWithChildren<MenuCard>) => {
-    return (
-        <Grid size={gridSize} padding={2}>
-            <Card sx={sx ? sx : {boxShadow: 2, borderRadius: 5}}>
-                <CardContent>
-                    {children}
-                </CardContent>
-            </Card>
-        </Grid>
-    )
-}
+const MenuCard = ({ children, gridSize, sx }: PropsWithChildren<MenuCard>) => {
+  const [isMouseOver, setIsMouseOver] = useState<boolean>(false);
+
+  return (
+    <Grid size={gridSize} padding={2}>
+      <Card
+        onMouseLeave={() => {
+          setIsMouseOver(false);
+        }}
+        onMouseEnter={() => {
+          setIsMouseOver(true);
+        }}
+        sx={{
+          boxShadow: isMouseOver ? 20 : 2,
+          borderRadius: 5,
+          transition: "box-shadow 0.75s ease-in-out",
+          ...sx,
+        }}
+      >
+        <CardContent>{children}</CardContent>
+      </Card>
+    </Grid>
+  );
+};
 
 export default MenuCard;
