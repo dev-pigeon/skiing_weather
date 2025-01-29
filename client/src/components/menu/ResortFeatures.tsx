@@ -5,6 +5,7 @@ import TextItem from "./TextItem";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
+import DownhillSkiingOutlinedIcon from "@mui/icons-material/DownhillSkiingOutlined";
 
 interface ResortFeatures {
   currentResort: SkiResort;
@@ -46,6 +47,7 @@ const ResortFeatures = ({ currentResort }: ResortFeatures) => {
           title="Longest Run: "
           data={currentResort["Longest run"]}
           dataAdornment="km"
+          icon={<DownhillSkiingOutlinedIcon />}
         />
       </Box>
     </MenuCard>
