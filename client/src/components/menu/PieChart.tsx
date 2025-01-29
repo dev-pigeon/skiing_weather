@@ -1,4 +1,4 @@
-import { Grid2, Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { PieChart } from "@mui/x-charts/PieChart";
 import { SkiResort } from "../WorldMap/IconLayer";
 

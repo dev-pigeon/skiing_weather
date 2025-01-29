@@ -1,13 +1,12 @@
 import { PropsWithChildren, useState } from "react";
-import Grid from "@mui/material/Grid2";
-import { Card, CardContent } from "@mui/material";
+import { Card, CardContent, Typography } from "@mui/material";
 
 interface MenuCard {
-  gridSize: number;
   sx?: object;
+  title?: string;
 }
 
-const MenuCard = ({ children, gridSize, sx }: PropsWithChildren<MenuCard>) => {
+const MenuCard = ({ children, sx, title }: PropsWithChildren<MenuCard>) => {
   const [isMouseOver, setIsMouseOver] = useState<boolean>(false);
 
   return (
@@ -19,13 +18,19 @@ const MenuCard = ({ children, gridSize, sx }: PropsWithChildren<MenuCard>) => {
         setIsMouseOver(true);
       }}
       sx={{
+        margin: 1,
         boxShadow: isMouseOver ? 20 : 2,
         borderRadius: 5,
         transition: "box-shadow 0.75s ease-in-out",
         ...sx,
       }}
     >
-      <CardContent>{children}</CardContent>
+      <CardContent>
+        <Typography variant="h6" gutterBottom>
+          {title}
+        </Typography>
+        {children}
+      </CardContent>
     </Card>
   );
 };

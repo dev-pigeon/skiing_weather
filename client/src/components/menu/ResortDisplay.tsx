@@ -1,9 +1,8 @@
 import { SkiResort } from "../WorldMap/IconLayer";
 import IconPaths from "../../assets/IconPaths";
-import Grid from "@mui/material/Grid2";
 import CustomIcon from "./CustomIcon";
 import DifficultyChart from "./PieChart";
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuCard from "./MenuCard";
@@ -28,10 +27,13 @@ const ResortDisplay = ({ currentResort }: ResortDisplay) => {
       padding={2}
       overflow={"auto"}
     >
-      <MenuCard sx={{ width: 200 }} gridSize={5}>
-        <Typography variant="h6" gutterBottom>
-          Slopes & Lifts
-        </Typography>
+      <MenuCard sx={{ width: 200 }} title="Season & Pricing">
+        <TextItem title="Season Start: " data={currentResort.Season} />
+        <TextItem title="Season End: " data={currentResort.Season} />
+        <TextItem title="Pass Price: " data={`$${currentResort.Price}`} />
+      </MenuCard>
+
+      <MenuCard sx={{ width: 200 }} title="Slopes & Lifts">
         <Stack direction={"row"} paddingTop={2}>
           <CustomIcon
             ttBottom
@@ -57,19 +59,7 @@ const ResortDisplay = ({ currentResort }: ResortDisplay) => {
         <DifficultyChart currentResort={currentResort} />
       </MenuCard>
 
-      <MenuCard sx={{ width: 200 }} gridSize={6}>
-        <Typography variant="h6" gutterBottom>
-          Season & Pricing
-        </Typography>
-        <TextItem title="Season Start: " data={currentResort.Season} />
-        <TextItem title="Season End: " data={currentResort.Season} />
-        <TextItem title="Pass Price: " data={`$${currentResort.Price}`} />
-      </MenuCard>
-
-      <MenuCard gridSize={6}>
-        <Typography variant="h6" gutterBottom>
-          Mountain Stats
-        </Typography>
+      <MenuCard title="Mountain Stats">
         <TextItem
           title="Highest Point: "
           data={currentResort["Highest point"]}
@@ -84,10 +74,7 @@ const ResortDisplay = ({ currentResort }: ResortDisplay) => {
         />
       </MenuCard>
 
-      <MenuCard gridSize={6}>
-        <Typography variant="h6" gutterBottom>
-          Resort Features
-        </Typography>
+      <MenuCard title="Resort Features">
         <TextItem
           whiteSpace="nowrap"
           title="Snow Cannons: "
