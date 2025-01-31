@@ -4,6 +4,7 @@ import { fetchWeatherApi } from "openmeteo";
 interface WeatherData {
   currentWeather: Current;
   dailyWeather: Daily;
+  hourlyWeather: Hourly;
 }
 
 interface Current {
@@ -30,15 +31,47 @@ interface Daily {
 }
 
 interface Hourly {
-  temp: number;
-  precipitation_probability: number;
-  precipitation: number;
-  snowfall: number;
-  snow_depth: number;
-  cloud_cover: number;
-  visibility: number;
-  wind_speed_10m: number;
-  wind_gusts_10m: number;
+  temp: number[];
+  precipitation_probability: number[];
+  precipitation: number[];
+  snowfall: number[];
+  snow_depth: number[];
+  cloud_cover: number[]; //percent
+  visibility: number[];
+  wind_speed_10m: number[];
+  wind_gusts_10m: number[];
+}
+
+interface Day {
+  date: string;
+  dateDescriptor:
+    | "Today"
+    | "Tomorrow"
+    | "Monday"
+    | "Tuesday"
+    | "Wedneday"
+    | "Thursday"
+    | "Friday"
+    | "Saturday"
+    | "Sunday";
+  cloud_cover: "Clear Sky" | "Partly Cloudly" | "Overcast";
+  max_temp: number;
+  min_temp: number;
+  sunny: boolean;
+  rainy: boolean;
+  snowy: boolean;
+  foggy: boolean;
+  windy: boolean;
+}
+
+interface Hour {
+  time: string;
+  condition: "Clear Sky" | "Parly Sunny" | "Parly Cloudy" | "Overcast";
+  sunny: boolean;
+  rainy: boolean;
+  snowy: boolean;
+  foggy: boolean;
+  windy: boolean;
 }
 
 const WeatherCardHook = () => {
@@ -116,16 +149,33 @@ const WeatherCardHook = () => {
       ),
     };
 
+    const hourlyWeather: Hourly = {
+      temp: Array.from(response.hourly()!.variables(0)?.valuesArray()!),
+      precipitation_probability: Array.from(
+        response.hourly()!.variables(1)?.valuesArray()!
+      ),
+      precipitation: Array.from(
+        response.hourly()!.variables(2)?.valuesArray()!
+      ),
+      snowfall: Array.from(response.hourly()!.variables(3)?.valuesArray()!),
+      snow_depth: Array.from(response.hourly()!.variables(4)?.valuesArray()!),
+      cloud_cover: Array.from(response.hourly()!.variables(5)?.valuesArray()!),
+      visibility: Array.from(response.hourly()!.variables(6)?.valuesArray()!),
+      wind_speed_10m: Array.from(
+        response.hourly()!.variables(7)?.valuesArray()!
+      ),
+      wind_gusts_10m: Array.from(
+        response.hourly()!.variables(8)?.valuesArray()!
+      ),
+    };
+
     const newData: WeatherData = {
       currentWeather: currentWeatherData,
       dailyWeather: dailyWeather,
+      hourlyWeather: hourlyWeather,
     };
 
     setWeatherData(newData);
-  };
-
-  const processValuesArray = (arr: number[]) => {
-    let newArr = [];
   };
 
   return {
