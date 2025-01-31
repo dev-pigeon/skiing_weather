@@ -22,7 +22,7 @@ const SeasonPricing = ({ currentResort }: SeasonPricing) => {
   }, [currentResort]);
 
   return (
-    <MenuCard sx={{ width: 250 }} title="Season & Pricing">
+    <MenuCard divider sx={{ width: 250 }} title="Season & Pricing">
       <Box paddingTop={2}>
         <TextItem
           title="Season Start: "

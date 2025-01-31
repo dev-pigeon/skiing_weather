@@ -11,7 +11,7 @@ interface SlopesLifts {
 
 const SlopesLifts = ({ currentResort }: SlopesLifts) => {
   return (
-    <MenuCard sx={{ width: 200 }} title="Slopes & Lifts">
+    <MenuCard divider sx={{ width: 200 }} title="Slopes & Lifts">
       <Stack direction={"row"} paddingTop={2} spacing={0.5}>
         <CustomIcon
           ttBottom
