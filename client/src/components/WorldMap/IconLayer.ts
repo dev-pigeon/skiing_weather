@@ -52,7 +52,6 @@ const ResortIconLayer = ({ setCurrentResort }: ResortIconLayer) => {
         onHover: (icon) => {
             if (icon.object) {
                 const resort: SkiResort = icon.object;
-                console.log(resort);
                 setCurrentResort(resort);
             }
         },
