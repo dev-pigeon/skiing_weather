@@ -3,6 +3,7 @@ import { fetchWeatherApi } from "openmeteo";
 
 interface WeatherData {
   currentWeather: Current;
+  dailyWeather: Daily;
 }
 
 interface Current {
@@ -18,14 +19,14 @@ interface Current {
 }
 
 interface Daily {
-  min_temp: number;
-  max_temp: number;
-  min_feel_temp: number;
-  max_feel_temp: number;
-  showers_sum: number;
-  precipitation_probability_max: number;
-  wind_speed_10m_max: number;
-  wind_gusts_10m_max: number;
+  min_temp: number[];
+  max_temp: number[];
+  min_feel_temp: number[];
+  max_feel_temp: number[];
+  showers_sum: number[];
+  precipitation_probability_max: number[];
+  wind_speed_10m_max: number[];
+  wind_gusts_10m_max: number[];
 }
 
 interface Hourly {
@@ -98,11 +99,33 @@ const WeatherCardHook = () => {
       wind_speed_10m: response.current()!.variables(8)!.value(),
     };
 
+    const dailyWeather: Daily = {
+      min_temp: Array.from(response.daily()!.variables(0)?.valuesArray()!),
+      max_temp: Array.from(response.daily()!.variables(1)?.valuesArray()!),
+      min_feel_temp: Array.from(response.daily()!.variables(2)?.valuesArray()!),
+      max_feel_temp: Array.from(response.daily()!.variables(3)?.valuesArray()!),
+      showers_sum: Array.from(response.daily()!.variables(4)?.valuesArray()!),
+      precipitation_probability_max: Array.from(
+        response.daily()!.variables(5)?.valuesArray()!
+      ),
+      wind_speed_10m_max: Array.from(
+        response.daily()!.variables(6)?.valuesArray()!
+      ),
+      wind_gusts_10m_max: Array.from(
+        response.daily()!.variables(7)?.valuesArray()!
+      ),
+    };
+
     const newData: WeatherData = {
       currentWeather: currentWeatherData,
+      dailyWeather: dailyWeather,
     };
 
     setWeatherData(newData);
+  };
+
+  const processValuesArray = (arr: number[]) => {
+    let newArr = [];
   };
 
   return {

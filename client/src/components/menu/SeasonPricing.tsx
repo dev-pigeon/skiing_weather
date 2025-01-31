@@ -17,6 +17,10 @@ const SeasonPricing = ({ currentResort }: SeasonPricing) => {
   const useWeatherCard = WeatherCardHook();
 
   useEffect(() => {
+    console.log(useWeatherCard.weatherData);
+  }, [useWeatherCard.weatherData]);
+
+  useEffect(() => {
     const trimmedSeason = currentResort.Season.trim();
     const seasonArr = trimmedSeason.split("-");
     setStart(seasonArr[0]);
