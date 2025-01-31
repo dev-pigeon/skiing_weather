@@ -25,7 +25,16 @@ const WeatherCardHook = () => {
     const params = {
       latitude: lat,
       longitude: lon,
-      current: ["temperature_2m", "is_day", "wind_speed_10m"],
+      current: [
+        "temperature_2m",
+        "is_day",
+        "precipitation",
+        "rain",
+        "showers",
+        "snowfall",
+        "cloud_cover",
+        "wind_speed_10m",
+      ],
       hourly: [
         "temperature_2m",
         "precipitation_probability",
