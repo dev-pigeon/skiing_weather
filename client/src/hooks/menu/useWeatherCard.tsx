@@ -1,77 +1,13 @@
 import { useState } from "react";
 import { fetchWeatherApi } from "openmeteo";
+import {
+  DailyWeatherAPIResponse,
+  HourlyWeatherAPIResponse,
+} from "./WeatherInterfaces";
 
 interface WeatherData {
-  currentWeather: Current;
-  dailyWeather: Daily;
-  hourlyWeather: Hourly;
-}
-
-interface Current {
-  temperature: number;
-  relative_humidity: number;
-  is_day: number;
-  precipitaion: number;
-  rain: number;
-  showers: number;
-  snowfall: number;
-  cloud_cover: number;
-  wind_speed_10m: number;
-}
-
-interface Daily {
-  min_temp: number[];
-  max_temp: number[];
-  min_feel_temp: number[];
-  max_feel_temp: number[];
-  showers_sum: number[];
-  precipitation_probability_max: number[];
-  wind_speed_10m_max: number[];
-  wind_gusts_10m_max: number[];
-}
-
-interface Hourly {
-  temp: number[];
-  precipitation_probability: number[];
-  precipitation: number[];
-  snowfall: number[];
-  snow_depth: number[];
-  cloud_cover: number[]; //percent
-  visibility: number[];
-  wind_speed_10m: number[];
-  wind_gusts_10m: number[];
-}
-
-interface Day {
-  date: string;
-  dateDescriptor:
-    | "Today"
-    | "Tomorrow"
-    | "Monday"
-    | "Tuesday"
-    | "Wedneday"
-    | "Thursday"
-    | "Friday"
-    | "Saturday"
-    | "Sunday";
-  cloud_cover: "Clear Sky" | "Partly Cloudly" | "Overcast";
-  max_temp: number;
-  min_temp: number;
-  sunny: boolean;
-  rainy: boolean;
-  snowy: boolean;
-  foggy: boolean;
-  windy: boolean;
-}
-
-interface Hour {
-  time: string;
-  condition: "Clear Sky" | "Parly Sunny" | "Parly Cloudy" | "Overcast";
-  sunny: boolean;
-  rainy: boolean;
-  snowy: boolean;
-  foggy: boolean;
-  windy: boolean;
+  dailyWeather: DailyWeatherAPIResponse;
+  hourlyWeather: HourlyWeatherAPIResponse;
 }
 
 const WeatherCardHook = () => {
@@ -120,19 +56,7 @@ const WeatherCardHook = () => {
     const responses = await fetchWeatherApi(url, params);
     const response = responses[0];
 
-    const currentWeatherData: Current = {
-      temperature: response.current()!.variables(0)!.value(),
-      relative_humidity: response.current()!.variables(1)!.value(),
-      is_day: response.current()!.variables(2)!.value(),
-      precipitaion: response.current()!.variables(3)!.value(),
-      rain: response.current()!.variables(4)!.value(),
-      showers: response.current()!.variables(5)!.value(),
-      snowfall: response.current()!.variables(6)!.value(),
-      cloud_cover: response.current()!.variables(7)!.value(),
-      wind_speed_10m: response.current()!.variables(8)!.value(),
-    };
-
-    const dailyWeather: Daily = {
+    const dailyWeather: DailyWeatherAPIResponse = {
       min_temp: Array.from(response.daily()!.variables(0)?.valuesArray()!),
       max_temp: Array.from(response.daily()!.variables(1)?.valuesArray()!),
       min_feel_temp: Array.from(response.daily()!.variables(2)?.valuesArray()!),
@@ -149,7 +73,7 @@ const WeatherCardHook = () => {
       ),
     };
 
-    const hourlyWeather: Hourly = {
+    const hourlyWeather: HourlyWeatherAPIResponse = {
       temp: Array.from(response.hourly()!.variables(0)?.valuesArray()!),
       precipitation_probability: Array.from(
         response.hourly()!.variables(1)?.valuesArray()!
@@ -170,7 +94,6 @@ const WeatherCardHook = () => {
     };
 
     const newData: WeatherData = {
-      currentWeather: currentWeatherData,
       dailyWeather: dailyWeather,
       hourlyWeather: hourlyWeather,
     };
