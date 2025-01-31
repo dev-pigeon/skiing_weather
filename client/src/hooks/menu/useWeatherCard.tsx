@@ -17,6 +17,29 @@ interface Current {
   wind_speed_10m: number;
 }
 
+interface Daily {
+  min_temp: number;
+  max_temp: number;
+  min_feel_temp: number;
+  max_feel_temp: number;
+  showers_sum: number;
+  precipitation_probability_max: number;
+  wind_speed_10m_max: number;
+  wind_gusts_10m_max: number;
+}
+
+interface Hourly {
+  temp: number;
+  precipitation_probability: number;
+  precipitation: number;
+  snowfall: number;
+  snow_depth: number;
+  cloud_cover: number;
+  visibility: number;
+  wind_speed_10m: number;
+  wind_gusts_10m: number;
+}
+
 const WeatherCardHook = () => {
   const [weatherData, setWeatherData] = useState<WeatherData | undefined>();
   const url = "https://api.open-meteo.com/v1/forecast";
