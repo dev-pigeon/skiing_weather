@@ -4,6 +4,7 @@ import SeasonPricing from "./SeasonPricing";
 import SlopesLifts from "./SlopesLifts";
 import ResortFeatures from "./ResortFeatures";
 import MountainStats from "./MountainStats";
+import WeatherCard from "./WeatherCard";
 
 interface ResortDisplay {
   currentResort: SkiResort;
@@ -23,6 +24,7 @@ const ResortDisplay = ({ currentResort }: ResortDisplay) => {
       overflow={"auto"}
     >
       <SeasonPricing currentResort={currentResort} />
+      <WeatherCard currentResort={currentResort} />
       <SlopesLifts currentResort={currentResort} />
       <MountainStats currentResort={currentResort} />
       <ResortFeatures currentResort={currentResort} />

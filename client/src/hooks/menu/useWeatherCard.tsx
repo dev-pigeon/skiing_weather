@@ -2,12 +2,15 @@ import { useState } from "react";
 import { fetchWeatherApi } from "openmeteo";
 import {
   DailyWeatherAPIResponse,
+  Day,
   HourlyWeatherAPIResponse,
+  NowWeatherAPIResponse,
 } from "./WeatherInterfaces";
 
 interface WeatherData {
   dailyWeather: DailyWeatherAPIResponse;
   hourlyWeather: HourlyWeatherAPIResponse;
+  currentWeather: NowWeatherAPIResponse;
 }
 
 const WeatherCardHook = () => {
@@ -19,14 +22,11 @@ const WeatherCardHook = () => {
       latitude: lat,
       longitude: lon,
       current: [
-        "temperature_2m",
-        "is_day",
-        "precipitation",
         "rain",
-        "showers",
-        "snowfall",
-        "cloud_cover",
+        "temperature_2m",
+        "sunshine_duration",
         "wind_speed_10m",
+        "snowfall",
       ],
       hourly: [
         "temperature_2m",
@@ -38,6 +38,8 @@ const WeatherCardHook = () => {
         "visibility",
         "wind_speed_10m",
         "wind_gusts_10m",
+        "rain",
+        "showers",
       ],
       daily: [
         "temperature_2m_max",
@@ -91,14 +93,39 @@ const WeatherCardHook = () => {
       wind_gusts_10m: Array.from(
         response.hourly()!.variables(8)?.valuesArray()!
       ),
+      rain: Array.from(response.hourly()!.variables(9)?.valuesArray()!),
+      showers: Array.from(response.hourly()!.variables(10)?.valuesArray()!),
+    };
+
+    const now: NowWeatherAPIResponse = {
+      rain: response.current()!.variables(0)?.value()!,
+      temp: response.current()!.variables(1)?.value()!,
+      sunshine_duration: response.current()!.variables(2)?.value()!,
+      wind_speed: response.current()!.variables(3)?.value()!,
     };
 
     const newData: WeatherData = {
       dailyWeather: dailyWeather,
       hourlyWeather: hourlyWeather,
+      currentWeather: now,
     };
 
     setWeatherData(newData);
+  };
+
+  const parseDays = (dailyResponse: DailyWeatherAPIResponse) => {
+    const numParams = 8;
+    let days: Day[] = [];
+    // get the current date String (Month day with DayJS), and subtract by one
+    // create a weather object factory
+    for (let i = 0; i < numParams; ++i) {
+      // each iteration creates a day
+      // date is initDate + 1 day
+      // date descriptor (can get from day JS object)
+      // cloud cover will use switch
+      // max and min temp are easy
+      // the booleans will be determined later
+    }
   };
 
   return {

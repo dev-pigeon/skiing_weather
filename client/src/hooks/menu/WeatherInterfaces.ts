@@ -9,16 +9,25 @@ export interface DailyWeatherAPIResponse {
     wind_gusts_10m_max: number[];
 }
 
+export interface NowWeatherAPIResponse {
+  rain : number,
+  temp : number,
+  sunshine_duration : number,
+  wind_speed : number
+}
+
 export interface HourlyWeatherAPIResponse {
-    temp: number[];
-    precipitation_probability: number[];
-    precipitation: number[];
+  temp: number[];
+  precipitation_probability: number[];
+  precipitation: number[];
   snowfall: number[];
   snow_depth: number[];
   cloud_cover: number[]; //percent
   visibility: number[];
   wind_speed_10m: number[];
   wind_gusts_10m: number[];
+  rain : number[];
+  showers:number[];
 }
 
 export interface DailyWeather {
@@ -42,7 +51,7 @@ export interface Day {
       | "Friday"
       | "Saturday"
       | "Sunday";
-    cloud_cover: "Clear Sky" | "Partly Cloudly" | "Overcast";
+    cloud_cover: "Clear Sky" | "Partly Cloudly" | "Partly Sunny" | "Overcast";
     max_temp: number;
     min_temp: number;
     sunny: boolean;
@@ -50,6 +59,12 @@ export interface Day {
     snowy: boolean;
     foggy: boolean;
     windy: boolean;
+  }
+
+  export interface Now {
+    temp : number,
+    conditions : string,
+    icon?: React.ReactNode,
   }
 
 
