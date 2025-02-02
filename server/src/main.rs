@@ -1,9 +1,12 @@
 mod requests;
 
+use anyhow::Result;
+use axum::{
+    routing::{get, post},
+    Json, Router,
+};
 use requests::TourRequest;
 use std::env;
-use axum::{routing::{get, post}, Router, Json};
-use anyhow::Result;
 use tokio::net::TcpListener;
 
 #[tokio::main]
@@ -45,7 +48,6 @@ async fn tour(Json(payload): Json<TourRequest>) -> Json<TourRequest> {
     Json(payload)
 }
 
-
 #[cfg(test)]
 mod test {
     use super::*;
@@ -57,10 +59,7 @@ mod test {
     async fn test_root() {
         let app = create_router();
 
-        let response = app
-            .oneshot(Request::new(Body::empty()))
-            .await
-            .unwrap();
+        let response = app.oneshot(Request::new(Body::empty())).await.unwrap();
 
         let bytes = axum::body::to_bytes(response.into_body(), usize::MAX)
             .await
@@ -83,10 +82,7 @@ mod test {
             .body(Body::from(serde_json::to_string(&test_tour).unwrap()))
             .unwrap();
 
-        let response = app
-            .oneshot(request)
-            .await
-            .unwrap();
+        let response = app.oneshot(request).await.unwrap();
 
         let bytes = axum::body::to_bytes(response.into_body(), usize::MAX)
             .await
