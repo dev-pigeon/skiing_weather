@@ -8,11 +8,43 @@ export function parseCurrentWeather(currentWeather : NowWeatherAPIResponse) {
     const currentTemp = parseInt(currentWeather.temp.toFixed(0));
     const sunConditions = getSunshineClass(currentWeather.sunshine_duration, "Now"); // use for icon
     const rainCondition = getRainConditions(currentWeather.rain, "Now");
-    const displayCondition = getDisplayCondition(rainCondition, sunConditions);
-
-    // dont forget to add snowfall to current api request!
+    const snowCondition = getSnowCondition(currentWeather.snowfall, "Now");
+    const displayConditionText = getDisplayCondition(rainCondition, sunConditions, snowCondition);
+    
+    console.log("hi");
 }
 
+function getDisplayIcon(sun : string, rain : string, snow : string) {
+    // basically it can be totally sunny (no rain)
+    // partially sunny with rain or snow
+    // or cloudy
+    if(sun == "Partly Sunny" || sun == "Partly Cloudy") {
+        return getPartlyIcon(rain, snow);
+    } else if(sun == "Cloudy") {
+        return getCloudyIcon(rain, snow);
+    }
+    return "Sunny"
+}
+
+function getCloudyIcon(rain : string, snow : string) {
+    if(snow != "No Snow") {
+        return "CloudlySnowing"
+   }
+   if(rain != "No Rain") {
+       return "CloudlyRaining"
+   } 
+   return "Cloudy"
+}
+
+function getPartlyIcon(rain : string, snow : string) {
+    if(snow != "No Snow") {
+         return "PartlyCloudlySnowing"
+    }
+    if(rain != "No Rain") {
+        return "PartlyCloudlyRaining"
+    } 
+    return "PartlyCloudy"
+}
 // this function will determine sun conditions
 // default is for current time (15 mins) 
 // tm = 4 is an hour, tm=96 is for a day
@@ -40,8 +72,27 @@ function getRainConditions(rainMM : number, type : "Now" | "Hour" | "Day") {
     return "No Rain";
 }
 
-function getDisplayCondition(rainCondition : string, sunCondition : string) {
-    if(rainCondition != "No Rain") {
+function getSnowCondition(snowCM : number,  type : "Now" | "Hour" | "Day") {
+    const multiplier = getMultiplier(type);
+    if(snowCM >= (3 * multiplier)) {
+        return "Heavy Snow"
+    } else if(snowCM >= (1 * multiplier) && snowCM < (3* multiplier)) {
+        return "Snow"
+    } else if(snowCM >= (.1 * multiplier) && snowCM < (1 * multiplier)) {
+        "Light Snow"
+    } 
+    return "No Snow";
+}
+
+function getDisplayCondition(rainCondition : string, sunCondition : string, snowCondition : string) {
+    // snow by default
+    // then rain
+    // then if its sun
+
+    if(snowCondition != "N Snow") {
+        return snowCondition;
+    }
+   else if(rainCondition != "No Rain") {
         return rainCondition;
     }
     return sunCondition;

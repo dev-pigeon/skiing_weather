@@ -13,7 +13,8 @@ export interface NowWeatherAPIResponse {
   rain : number,
   temp : number,
   sunshine_duration : number,
-  wind_speed : number
+  wind_speed : number,
+  snowfall : number,
 }
 
 export interface HourlyWeatherAPIResponse {
