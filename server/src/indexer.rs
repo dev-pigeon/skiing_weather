@@ -2,7 +2,7 @@ use crate::parser::{Parser, Resort};
 use std::collections::HashMap;
 
 pub struct Indexer {
-    map: HashMap<(f32, f32), Vec<Resort>>,
+    map: HashMap<(f32, f32), Resort>,
 }
 
 impl Indexer {

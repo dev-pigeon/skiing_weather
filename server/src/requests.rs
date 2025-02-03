@@ -17,14 +17,11 @@ impl TourRequest {
 
 #[derive(Deserialize, Serialize, PartialEq, Debug)]
 pub struct TourResponse {
-    success: bool
+    success: bool,
 }
 
 impl TourResponse {
     pub fn new(success: bool) -> Self {
-        TourResponse {
-            success
-        }
+        TourResponse { success }
     }
 }
-

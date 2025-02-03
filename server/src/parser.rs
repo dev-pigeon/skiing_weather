@@ -1,8 +1,7 @@
-
-use std::path::Path;
-use anyhow::{Result, anyhow};
+use anyhow::{anyhow, Result};
 use serde::Deserialize;
 use serde_json;
+use std::path::Path;
 
 pub struct Parser {
     pub resorts: Vec<Resort>,
@@ -49,7 +48,7 @@ pub struct Resort {
     Nightskiing: String,
     #[serde(rename = "Summer skiing")]
     Summer_skiing: String,
-   pub coordinates: Vec<String>,
+    pub coordinates: Vec<String>,
 }
 
 impl Parser {
@@ -60,11 +59,9 @@ impl Parser {
     }
 
     pub fn from_path(path: &str) -> Result<Self> {
-        Ok(
-            Self {
-                resorts: Resort::from_path(path)?,
-            }
-        )
+        Ok(Self {
+            resorts: Resort::from_path(path)?,
+        })
     }
 }
 
@@ -72,7 +69,8 @@ impl Resort {
     fn from_path(path: &str) -> Result<Vec<Self>> {
         let path = Path::new(path);
         let file = std::fs::File::open(path)?;
-        let resorts: Vec<Resort> = serde_json::from_reader(file).map_err(|e| anyhow!("Failed to parse JSON: {}", e))?;
+        let resorts: Vec<Resort> =
+            serde_json::from_reader(file).map_err(|e| anyhow!("Failed to parse JSON: {}", e))?;
         Ok(resorts)
     }
 }
