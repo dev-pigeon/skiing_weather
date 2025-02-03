@@ -1,11 +1,13 @@
 mod requests;
+mod parser;
+mod indexer;
 
 use anyhow::Result;
 use axum::{
     routing::{get, post},
     Json, Router,
 };
-use requests::TourRequest;
+use requests::{TourRequest, TourResponse};
 use std::env;
 use tokio::net::TcpListener;
 
