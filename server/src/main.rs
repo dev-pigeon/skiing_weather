@@ -1,7 +1,7 @@
+mod WrappedF32;
+mod indexer;
 mod parser;
 mod requests;
-mod indexer;
-mod WrappedF32;
 
 use anyhow::Result;
 use axum::{

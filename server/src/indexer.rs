@@ -1,6 +1,6 @@
 use crate::parser::{Parser, Resort};
-use std::collections::HashMap;
 use crate::WrappedF32::WrappedF32;
+use std::collections::HashMap;
 
 /// Indexer mapping a coordinate pair (longitude, latitude) to a Resort.
 pub struct Indexer {
@@ -98,6 +98,8 @@ mod tests {
     #[test]
     fn test_is_within_bounds() {
         assert!(Indexer::is_within_bounds(10.0, 45.0, 9.0, 44.0, 11.0, 46.0));
-        assert!(!Indexer::is_within_bounds(12.0, 47.0, 9.0, 44.0, 11.0, 46.0));
+        assert!(!Indexer::is_within_bounds(
+            12.0, 47.0, 9.0, 44.0, 11.0, 46.0
+        ));
     }
 }

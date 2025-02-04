@@ -1,6 +1,6 @@
 use std::hash::{Hash, Hasher};
 
-#[derive(Copy, Clone,Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct WrappedF32(pub f32);
 
 impl PartialEq for WrappedF32 {
