@@ -16,9 +16,9 @@ impl From<f32> for WrappedF32 {
     }
 }
 
-impl Into<f32> for WrappedF32 {
-    fn into(self) -> f32 {
-        self.0
+impl From<WrappedF32> for f32 {
+    fn from(value: WrappedF32) -> Self {
+        value.0
     }
 }
 

@@ -1,5 +1,3 @@
-use std::ops::Sub;
-
 use crate::parser::Resort;
 use serde::{Deserialize, Serialize};
 
@@ -29,7 +27,7 @@ impl From<Vec<Resort>> for TourResponse {
     fn from(found: Vec<Resort>) -> Self {
         let len = found.len();
         TourResponse {
-            found: found,
+            found,
             success: true,
             length: len,
         }
