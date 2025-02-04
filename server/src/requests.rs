@@ -1,27 +1,37 @@
+use std::ops::Sub;
+
+use crate::parser::Resort;
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize, PartialEq, Debug)]
 pub struct TourRequest {
-    boundary_x: f32,
-    boundary_y: f32,
+    pub top_left: (f32, f32),
+    pub bottom_right: (f32, f32),
 }
 
 impl TourRequest {
-    pub fn new(boundary_x: f32, boundary_y: f32) -> Self {
+    pub fn new(top_left: (f32, f32), bottom_right: (f32, f32)) -> Self {
         TourRequest {
-            boundary_x,
-            boundary_y,
+            top_left,
+            bottom_right,
         }
     }
 }
 
 #[derive(Deserialize, Serialize, PartialEq, Debug)]
 pub struct TourResponse {
+    found: Vec<Resort>,
     success: bool,
+    pub length: usize,
 }
 
-impl TourResponse {
-    pub fn new(success: bool) -> Self {
-        TourResponse { success }
+impl From<Vec<Resort>> for TourResponse {
+    fn from(found: Vec<Resort>) -> Self {
+        let len = found.len();
+        TourResponse {
+            found: found,
+            success: true,
+            length: len,
+        }
     }
 }
