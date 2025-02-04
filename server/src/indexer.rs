@@ -22,7 +22,6 @@ impl Indexer {
         self.map
             .iter()
             .filter(|((lon, lat), _)| {
-                // Directly use the inner f32 values for fast comparison.
                 Self::is_within_bounds(lon.0, lat.0, min_lon, min_lat, max_lon, max_lat)
             })
             .map(|(_, resort)| resort)
@@ -53,10 +52,8 @@ impl From<Parser> for Indexer {
     fn from(parser: Parser) -> Self {
         let mut map = HashMap::new();
         for resort in parser.resorts {
-            // Parse coordinate strings into f32 and wrap them.
             let lon = WrappedF32::from(resort.coordinates[0].parse::<f32>().unwrap());
             let lat = WrappedF32::from(resort.coordinates[1].parse::<f32>().unwrap());
-            // Directly insert the resort (1-1 mapping).
             map.insert((lon, lat), resort);
         }
         Indexer { map }

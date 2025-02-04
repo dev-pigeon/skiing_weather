@@ -5,8 +5,7 @@ pub struct WrappedF32(pub f32);
 
 impl PartialEq for WrappedF32 {
     fn eq(&self, other: &Self) -> bool {
-        // Compare bitwise so that +0.0 and -0.0 are distinct,
-        // and all NaNs compare equal if you choose to normalize them.
+        // Compare bitwise so that +0.0 and -0.0 are distinct
         self.0.to_bits() == other.0.to_bits()
     }
 }
