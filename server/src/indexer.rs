@@ -18,13 +18,14 @@ impl Indexer {
         min_lat: f32,
         max_lon: f32,
         max_lat: f32,
-    ) -> Vec<&Resort> {
+    ) -> Vec<Resort> {
         self.map
             .iter()
             .filter(|((lon, lat), _)| {
                 Self::is_within_bounds(lon.0, lat.0, min_lon, min_lat, max_lon, max_lat)
             })
             .map(|(_, resort)| resort)
+            .cloned()
             .collect()
     }
 
@@ -43,8 +44,8 @@ impl Indexer {
 
     /// Get all resorts stored in the index.
     #[inline(always)]
-    pub fn get_all_resorts(&self) -> Vec<&Resort> {
-        self.map.values().collect()
+    pub fn get_all_resorts(&self) -> Vec<Resort> {
+        self.map.values().cloned().collect()
     }
 }
 

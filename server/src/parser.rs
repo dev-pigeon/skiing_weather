@@ -1,5 +1,5 @@
 use anyhow::{anyhow, Result};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use serde_json;
 use std::path::Path;
 
@@ -8,7 +8,7 @@ pub struct Parser {
 }
 
 #[allow(non_snake_case, dead_code)]
-#[derive(Deserialize, Debug, Default)]
+#[derive(Serialize, Deserialize, Debug, Default, PartialEq, Eq, Clone)]
 pub struct Resort {
     ID: String,
     Resort: String,
