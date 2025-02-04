@@ -1,4 +1,4 @@
-import { NowWeatherAPIResponse } from "./WeatherInterfaces";
+import { Now, NowWeatherAPIResponse } from "./WeatherInterfaces";
 
 
 // get your weather icons here!! https://www.flaticon.com/free-icons/weather
@@ -10,8 +10,12 @@ export function parseCurrentWeather(currentWeather : NowWeatherAPIResponse) {
     const rainCondition = getRainConditions(currentWeather.rain, "Now");
     const snowCondition = getSnowCondition(currentWeather.snowfall, "Now");
     const displayConditionText = getDisplayCondition(rainCondition, sunConditions, snowCondition);
-    
-    console.log("hi");
+    const displayIconTitle = getDisplayIcon(sunConditions, rainCondition, snowCondition);
+    const current_weather : Now = {
+        temp : currentTemp,
+        display_label : displayConditionText,
+    }
+    return current_weather;
 }
 
 function getDisplayIcon(sun : string, rain : string, snow : string) {
@@ -85,11 +89,7 @@ function getSnowCondition(snowCM : number,  type : "Now" | "Hour" | "Day") {
 }
 
 function getDisplayCondition(rainCondition : string, sunCondition : string, snowCondition : string) {
-    // snow by default
-    // then rain
-    // then if its sun
-
-    if(snowCondition != "N Snow") {
+    if(snowCondition != "No Snow") {
         return snowCondition;
     }
    else if(rainCondition != "No Rain") {

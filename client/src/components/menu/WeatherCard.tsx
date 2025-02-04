@@ -3,7 +3,8 @@ import { SkiResort } from "../WorldMap/IconLayer";
 import MenuCard from "./MenuCard";
 import { useEffect } from "react";
 import WeatherCardHook from "../../hooks/menu/useWeatherCard";
-
+import WeatherIcon from "./WeatherIcon";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 interface WeatherCard {
   currentResort: SkiResort;
 }
@@ -20,16 +21,23 @@ const WeatherCard = ({ currentResort }: WeatherCard) => {
     <div>
       {useWeatherCard.weatherData && (
         <MenuCard>
-          <Stack
-            direction={"row"}
-            justifyContent={"space-betwee"}
-            alignItems={"center"}
-          >
-            <Stack direction={"row"} alignItems={"center"}>
-              <Typography variant="h5" color="black">
-                {`${useWeatherCard.weatherData?.currentWeather.temp.toFixed(
-                  0
-                )}°`}
+          <Stack direction={"row"} spacing={6}>
+            <Stack alignItems={"left"} spacing={0} justifyContent={"center"}>
+              <Stack direction={"row"}>
+                <LocationOnOutlinedIcon fontSize="small" />
+                <Typography whiteSpace={"normal"} variant={"caption"}>
+                  {currentResort.Resort}
+                </Typography>
+              </Stack>
+
+              <Typography fontWeight={"bold"} variant="h4" color="black">
+                {`${useWeatherCard.weatherData.now.temp}°`}
+              </Typography>
+            </Stack>
+            <Stack spacing={0.5} alignItems={"center"}>
+              <WeatherIcon name="sun" />
+              <Typography fontWeight={575} fontSize={"12px"}>
+                {useWeatherCard.weatherData.now.display_label}
               </Typography>
             </Stack>
           </Stack>

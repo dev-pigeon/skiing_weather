@@ -4,6 +4,7 @@ import {
   DailyWeatherAPIResponse,
   Day,
   HourlyWeatherAPIResponse,
+  Now,
   NowWeatherAPIResponse,
 } from "./WeatherInterfaces";
 import { parseCurrentWeather } from "./WeatherParser";
@@ -12,6 +13,7 @@ interface WeatherData {
   dailyWeather: DailyWeatherAPIResponse;
   hourlyWeather: HourlyWeatherAPIResponse;
   currentWeather: NowWeatherAPIResponse;
+  now: Now;
 }
 
 const WeatherCardHook = () => {
@@ -106,13 +108,14 @@ const WeatherCardHook = () => {
       snowfall: response.current()!.variables(4)?.value()!,
     };
 
+    const actualNow: Now = parseCurrentWeather(now);
+
     const newData: WeatherData = {
       dailyWeather: dailyWeather,
       hourlyWeather: hourlyWeather,
       currentWeather: now,
+      now: actualNow,
     };
-
-    parseCurrentWeather(now);
 
     setWeatherData(newData);
   };

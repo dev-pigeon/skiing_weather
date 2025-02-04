@@ -15,3 +15,4 @@ const IconPaths: { [key: string]: { path: string } } = {
 };
 
 export default IconPaths;
+

@@ -1,5 +1,5 @@
-import { Icon, Stack, SvgIcon } from "@mui/material";
-import IconPaths from "../../assets/IconPaths";
+import { Stack } from "@mui/material";
+import IconPaths from "./IconPaths";
 import { SkiResort } from "../WorldMap/IconLayer";
 import CustomIcon from "./CustomIcon";
 import MenuCard from "./MenuCard";

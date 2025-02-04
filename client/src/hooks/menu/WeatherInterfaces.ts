@@ -64,7 +64,7 @@ export interface Day {
 
   export interface Now {
     temp : number,
-    conditions : string,
+    display_label : string,
     icon?: React.ReactNode,
   }
 
