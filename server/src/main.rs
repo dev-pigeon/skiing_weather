@@ -1,3 +1,6 @@
+mod WrappedF32;
+mod indexer;
+mod parser;
 mod requests;
 
 use anyhow::Result;
@@ -5,9 +8,17 @@ use axum::{
     routing::{get, post},
     Json, Router,
 };
-use requests::TourRequest;
+use lazy_static::lazy_static;
+use requests::{TourRequest, TourResponse};
 use std::env;
 use tokio::net::TcpListener;
+
+lazy_static! {
+    static ref INDEXER: indexer::Indexer = {
+        let parser = parser::Parser::from_path("../data/resorts.json").unwrap();
+        indexer::Indexer::from(parser)
+    };
+}
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -43,9 +54,17 @@ async fn root() -> &'static str {
     "Hello, World!"
 }
 
-async fn tour(Json(payload): Json<TourRequest>) -> Json<TourRequest> {
-    //Just reflects the request for now
-    Json(payload)
+async fn tour(Json(payload): Json<TourRequest>) -> Json<TourResponse> {
+    let found = INDEXER.find_in_bounds(
+        payload.top_left.0,
+        payload.top_left.1,
+        payload.bottom_right.0,
+        payload.bottom_right.1,
+    );
+
+    let response = TourResponse::from(found);
+
+    Json(response)
 }
 
 #[cfg(test)]
@@ -73,7 +92,7 @@ mod test {
     async fn test_tour() {
         let app = create_router();
 
-        let test_tour = TourRequest::new(10.0, 10.0);
+        let test_tour = TourRequest::new((10.0, 15.0), (10.0, 15.0));
 
         let request = Request::builder()
             .uri("/tour")
@@ -87,8 +106,9 @@ mod test {
         let bytes = axum::body::to_bytes(response.into_body(), usize::MAX)
             .await
             .unwrap();
-        let response_tour: TourRequest = serde_json::from_slice(&bytes).unwrap();
 
-        assert_eq!(response_tour, test_tour);
+        let response_tour: TourResponse = serde_json::from_slice(&bytes).unwrap();
+
+        assert_eq!(response_tour.length, 0);
     }
 }
