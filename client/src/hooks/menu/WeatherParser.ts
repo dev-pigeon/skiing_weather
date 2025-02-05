@@ -1,7 +1,11 @@
 import { Now, NowWeatherAPIResponse } from "./WeatherInterfaces";
 import dayjs from "dayjs";
 
-
+// TO DO
+    // move current weather card into its own thing
+    // create box for hourly forcast
+    // create hour cards
+    // fill in hourly box
 
 export function parseCurrentWeather(currentWeather : NowWeatherAPIResponse) {
     const is_day = getIsDay();
