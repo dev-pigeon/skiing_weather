@@ -22,7 +22,7 @@ const WeatherCard = ({ currentResort }: WeatherCard) => {
       {useWeatherCard.weatherData && (
         <MenuCard>
           {/* below here to the menu card goes in a separate component */}
-          <Stack direction={"row"} spacing={6}>
+          <Stack direction={"row"} justifyContent={"space-between"}>
             <Stack alignItems={"left"} spacing={0} justifyContent={"center"}>
               <Stack direction={"row"}>
                 <LocationOnOutlinedIcon fontSize="small" />
@@ -35,7 +35,7 @@ const WeatherCard = ({ currentResort }: WeatherCard) => {
                 {`${useWeatherCard.weatherData.now.temp}°`}
               </Typography>
             </Stack>
-            <Stack spacing={0.5} alignItems={"center"}>
+            <Stack spacing={0.5} alignItems={"center"} paddingRight={0}>
               <WeatherIcon name={useWeatherCard.weatherData.now.icon_title} />
               <Typography fontWeight={575} fontSize={"12px"}>
                 {useWeatherCard.weatherData.now.display_label}

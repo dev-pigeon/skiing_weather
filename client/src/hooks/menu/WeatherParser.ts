@@ -19,14 +19,10 @@ export function parseCurrentWeather(currentWeather : NowWeatherAPIResponse, is_d
 }
 
 function getDisplayIcon(sun : string, rain : string, snow : string, day : boolean) {
-   // add support for wind
-   // should be 
-   // if its  snowing just return snow
-   // if its raining then just rain
    if(snow != "No Snow") {
     return "Snow"
    } else if(rain != "No Rain") {
-    return "Rain"
+    return getRainIconTitle(rain, day);
    } else if(sun == "Partly Sunny" || sun == "Partly Cloudy") {
         return getPartlyIcon(rain, snow);
     } else if(sun == "Cloudy") {
@@ -34,6 +30,17 @@ function getDisplayIcon(sun : string, rain : string, snow : string, day : boolea
     }
     return day ? "ClearSkiesDay" : "ClearSkiesNight"
 }
+
+function getRainIconTitle (rain : string, day : boolean) {
+    const adornment = day ? "Day" : "Night"; // add to return once have day/night rain icons
+    switch(rain) {
+        case "Heavy Rain":
+            return "HeavyRain";
+        case "Rain":
+            return "Rain";
+    }
+    return "LightRain";
+} 
 
 function getCloudyIcon(rain : string, snow : string) {
     if(snow != "No Snow") {
