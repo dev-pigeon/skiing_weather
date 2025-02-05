@@ -36,7 +36,7 @@ const WeatherCard = ({ currentResort }: WeatherCard) => {
               </Typography>
             </Stack>
             <Stack spacing={0.5} alignItems={"center"}>
-              <WeatherIcon name={"moon"} />
+              <WeatherIcon name={useWeatherCard.weatherData.now.icon_title} />
               <Typography fontWeight={575} fontSize={"12px"}>
                 {useWeatherCard.weatherData.now.display_label}
               </Typography>

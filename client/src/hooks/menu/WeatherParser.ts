@@ -20,7 +20,14 @@ export function parseCurrentWeather(currentWeather : NowWeatherAPIResponse, is_d
 
 function getDisplayIcon(sun : string, rain : string, snow : string, day : boolean) {
    // add support for wind
-    if(sun == "Partly Sunny" || sun == "Partly Cloudy") {
+   // should be 
+   // if its  snowing just return snow
+   // if its raining then just rain
+   if(snow != "No Snow") {
+    return "Snow"
+   } else if(rain != "No Rain") {
+    return "Rain"
+   } else if(sun == "Partly Sunny" || sun == "Partly Cloudy") {
         return getPartlyIcon(rain, snow);
     } else if(sun == "Cloudy") {
         return getCloudyIcon(rain, snow);
@@ -63,7 +70,6 @@ function getSunshineClass(sunDuration : number, type : "Now" | "Hour" | "Day", d
 }
 
 function getRainConditions(rainMM : number, type : "Now" | "Hour" | "Day") {
-    console.log(`rain ${rainMM / 10}`)
     const multiplier = getMultiplier(type);
     if(rainMM >= (4 * multiplier)) {
         return "Heavy Rain";
@@ -89,7 +95,6 @@ function getSnowCondition(snowCM : number,  type : "Now" | "Hour" | "Day") {
 }
 
 function getDisplayCondition(rainCondition : string, sunCondition : string, snowCondition : string) {
-    console.log(snowCondition);
     if(snowCondition != "No Snow") {
         return snowCondition;
     }
