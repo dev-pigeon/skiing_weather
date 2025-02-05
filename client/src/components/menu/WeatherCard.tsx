@@ -22,7 +22,7 @@ const WeatherCard = ({ currentResort }: WeatherCard) => {
       {useWeatherCard.weatherData && (
         <MenuCard>
           {/* below here to the menu card goes in a separate component */}
-          <Stack direction={"row"} justifyContent={"space-between"}>
+          <Stack direction={"row"} justifyContent={"space-between"} spacing={2}>
             <Stack alignItems={"left"} spacing={0} justifyContent={"center"}>
               <Stack direction={"row"}>
                 <LocationOnOutlinedIcon fontSize="small" />

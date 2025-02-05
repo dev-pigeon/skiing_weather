@@ -1,21 +1,31 @@
 import { Now, NowWeatherAPIResponse } from "./WeatherInterfaces";
+import dayjs from "dayjs";
 
 
 
-export function parseCurrentWeather(currentWeather : NowWeatherAPIResponse, is_day: number) {
-    const day = is_day == 1 ? true : false;
+export function parseCurrentWeather(currentWeather : NowWeatherAPIResponse) {
+    const is_day = getIsDay();
+    console.log(is_day);
     const currentTemp = parseInt(currentWeather.temp.toFixed(0));
-    const sunConditions = getSunshineClass(currentWeather.sunshine_duration, "Now", day); // use for icon
+    const sunConditions = getSunshineClass(currentWeather.sunshine_duration, "Now", is_day); // use for icon
     const rainCondition = getRainConditions(currentWeather.rain, "Now");
     const snowCondition = getSnowCondition(currentWeather.snowfall, "Now");
     const displayConditionText = getDisplayCondition(rainCondition, sunConditions, snowCondition);
-    const displayIconTitle = getDisplayIcon(sunConditions, rainCondition, snowCondition, day);
+    const displayIconTitle = getDisplayIcon(sunConditions, rainCondition, snowCondition, is_day);
+    console.log(`icon / png name = ${displayIconTitle}`)
     const current_weather : Now = {
         temp : currentTemp,
         display_label : displayConditionText,
         icon_title: displayIconTitle,
     }
     return current_weather;
+}
+
+function getIsDay() {
+    // assume day starts at 6am and ends at 6pm
+    const hour = dayjs().hour();
+    console.log(hour);
+    return (hour >= 6 && hour <= 18);
 }
 
 function getDisplayIcon(sun : string, rain : string, snow : string, day : boolean) {
