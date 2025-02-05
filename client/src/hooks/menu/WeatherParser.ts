@@ -1,33 +1,31 @@
 import { Now, NowWeatherAPIResponse } from "./WeatherInterfaces";
 
 
-// get your weather icons here!! https://www.flaticon.com/free-icons/weather
 
-
-export function parseCurrentWeather(currentWeather : NowWeatherAPIResponse) {
+export function parseCurrentWeather(currentWeather : NowWeatherAPIResponse, is_day: number) {
+    const day = is_day == 1 ? true : false;
     const currentTemp = parseInt(currentWeather.temp.toFixed(0));
-    const sunConditions = getSunshineClass(currentWeather.sunshine_duration, "Now"); // use for icon
+    const sunConditions = getSunshineClass(currentWeather.sunshine_duration, "Now", day); // use for icon
     const rainCondition = getRainConditions(currentWeather.rain, "Now");
     const snowCondition = getSnowCondition(currentWeather.snowfall, "Now");
     const displayConditionText = getDisplayCondition(rainCondition, sunConditions, snowCondition);
-    const displayIconTitle = getDisplayIcon(sunConditions, rainCondition, snowCondition);
+    const displayIconTitle = getDisplayIcon(sunConditions, rainCondition, snowCondition, day);
     const current_weather : Now = {
         temp : currentTemp,
         display_label : displayConditionText,
+        icon_title: displayIconTitle,
     }
     return current_weather;
 }
 
-function getDisplayIcon(sun : string, rain : string, snow : string) {
-    // basically it can be totally sunny (no rain)
-    // partially sunny with rain or snow
-    // or cloudy
+function getDisplayIcon(sun : string, rain : string, snow : string, day : boolean) {
+   // add support for wind
     if(sun == "Partly Sunny" || sun == "Partly Cloudy") {
         return getPartlyIcon(rain, snow);
     } else if(sun == "Cloudy") {
         return getCloudyIcon(rain, snow);
     }
-    return "Sunny"
+    return day ? "ClearSkiesDay" : "ClearSkiesNight"
 }
 
 function getCloudyIcon(rain : string, snow : string) {
@@ -52,19 +50,20 @@ function getPartlyIcon(rain : string, snow : string) {
 // this function will determine sun conditions
 // default is for current time (15 mins) 
 // tm = 4 is an hour, tm=96 is for a day
-function getSunshineClass(sunDuration : number, type : "Now" | "Hour" | "Day") : string {
-   const multiplier = getMultiplier(type);
-   if(sunDuration >= (12 * multiplier)) {
-    return "Sunny"
-   } else if(sunDuration >= (8 * multiplier) && sunDuration <= ((11 * multiplier))) {
-    return "Partly Sunny"
-   } else if(sunDuration >=(4 * multiplier) && sunDuration <=(7 * multiplier)) {
-    return "Partly Cloudy"
-   } 
-   return "Cloudy"
+function getSunshineClass(sunDuration : number, type : "Now" | "Hour" | "Day", day : boolean) : string {
+        const multiplier = getMultiplier(type);
+        if((sunDuration >= (12 * multiplier)) || !day) {
+         return "Clear Skies"
+        } else if((sunDuration >= (8 * multiplier) && sunDuration <= ((11 * multiplier)))) {
+         return "Partly Sunny"
+        } else if(sunDuration >=(4 * multiplier) && sunDuration <=(7 * multiplier)) {
+         return "Partly Cloudy"
+        } 
+        return "Cloudy"
 }
 
 function getRainConditions(rainMM : number, type : "Now" | "Hour" | "Day") {
+    console.log(`rain ${rainMM / 10}`)
     const multiplier = getMultiplier(type);
     if(rainMM >= (4 * multiplier)) {
         return "Heavy Rain";
@@ -78,17 +77,19 @@ function getRainConditions(rainMM : number, type : "Now" | "Hour" | "Day") {
 
 function getSnowCondition(snowCM : number,  type : "Now" | "Hour" | "Day") {
     const multiplier = getMultiplier(type);
+  
     if(snowCM >= (3 * multiplier)) {
         return "Heavy Snow"
-    } else if(snowCM >= (1 * multiplier) && snowCM < (3* multiplier)) {
+    } else if(snowCM >= (1 * multiplier) && snowCM < (3 * multiplier)) {
         return "Snow"
     } else if(snowCM >= (.1 * multiplier) && snowCM < (1 * multiplier)) {
-        "Light Snow"
+        return "Light Snow"
     } 
     return "No Snow";
 }
 
 function getDisplayCondition(rainCondition : string, sunCondition : string, snowCondition : string) {
+    console.log(snowCondition);
     if(snowCondition != "No Snow") {
         return snowCondition;
     }

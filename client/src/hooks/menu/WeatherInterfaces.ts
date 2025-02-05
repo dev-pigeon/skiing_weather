@@ -29,6 +29,7 @@ export interface HourlyWeatherAPIResponse {
   wind_gusts_10m: number[];
   rain : number[];
   showers:number[];
+  is_day : number; // used for current weather
 }
 
 export interface DailyWeather {
@@ -65,7 +66,7 @@ export interface Day {
   export interface Now {
     temp : number,
     display_label : string,
-    icon?: React.ReactNode,
+    icon_title: string,
   }
 
 

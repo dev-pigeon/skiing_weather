@@ -43,6 +43,7 @@ const WeatherCardHook = () => {
         "wind_gusts_10m",
         "rain",
         "showers",
+        "is_day", // used for current time
       ],
       daily: [
         "temperature_2m_max",
@@ -98,6 +99,7 @@ const WeatherCardHook = () => {
       ),
       rain: Array.from(response.hourly()!.variables(9)?.valuesArray()!),
       showers: Array.from(response.hourly()!.variables(10)?.valuesArray()!),
+      is_day: Array.from(response.hourly()!.variables(11)?.valuesArray()!)[0],
     };
 
     const now: NowWeatherAPIResponse = {
@@ -108,7 +110,7 @@ const WeatherCardHook = () => {
       snowfall: response.current()!.variables(4)?.value()!,
     };
 
-    const actualNow: Now = parseCurrentWeather(now);
+    const actualNow: Now = parseCurrentWeather(now, hourlyWeather.is_day);
 
     const newData: WeatherData = {
       dailyWeather: dailyWeather,
