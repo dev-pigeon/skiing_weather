@@ -114,13 +114,11 @@ mod test {
 
     #[tokio::test]
     async fn test_find_beavercreek_exact() {
-        // Eldora coordinates: 39.9372° N, -105.5827° W
         let lat = 39.6048786;
         let lon = -106.5150017;
 
         
-        // Create tiny bounding box around exact point
-        let delta = 0.0001; // Small buffer for floating point precision
+        let delta = 0.0001;
         let resorts = INDEXER.find_in_bounds(
             lon - delta,  // min_lon 
             lat - delta,  // min_lat
