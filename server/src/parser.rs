@@ -10,7 +10,7 @@ pub struct Parser {
 #[derive(Serialize, Deserialize, Debug, Default, PartialEq, Eq, Clone)]
 pub struct Resort {
     ID: String,
-    Resort: String,
+    pub Resort: String,
     Country: String,
     Continent: String,
     Price: String,
