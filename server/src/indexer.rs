@@ -1,5 +1,6 @@
 use crate::parser::{Parser, Resort};
 use crate::WrappedF32::WrappedF32;
+use core::f32;
 use std::collections::HashMap;
 
 /// Indexer mapping a coordinate pair (longitude, latitude) to a Resort.
@@ -40,6 +41,45 @@ impl Indexer {
         max_lat: f32,
     ) -> bool {
         lon >= min_lon && lon <= max_lon && lat >= min_lat && lat <= max_lat
+    }
+
+    fn haversine(&self, lat1: f32, lon1: f32, lat2: f32, lon2: f32) -> f32 {
+        let radius_km = 6371.0;
+
+        let lat1 = lat1.to_radians();
+        let lon1 = lon1.to_radians();
+        let lat2 = lat2.to_radians();
+        let lon2 = lon2.to_radians();
+
+        let delta_lat = lat2 - lat1;
+        let delta_lon = lon2 - lon1;
+
+        let a = (delta_lat / 2.0).sin().powi(2)
+            + lat1.cos() * lat2.cos() * (delta_lon / 2.0).sin().powi(2);
+        let c = 2.0 * a.sqrt().asin();
+
+        c * radius_km
+    }
+
+    fn find_closest_resort(
+        &self,
+        lat: f32,
+        lon: f32,
+        resorts_within_bounds: Vec<Resort>,
+    ) -> Resort {
+        // use dist
+        let mut closest_dist = f32::MAX;
+        let mut closest_resort = &resorts_within_bounds[0];
+        for resort in &resorts_within_bounds {
+            let lat2: f32 = resort.coordinates[0].parse().unwrap();
+            let lon2: f32 = resort.coordinates[1].parse().unwrap();
+            let distance = self.haversine(lat, lon, lat2, lon2);
+            if distance < closest_dist {
+                closest_resort = resort;
+                closest_dist = distance;
+            }
+        }
+        closest_resort.clone()
     }
 
     /// Get all resorts stored in the index.
