@@ -61,7 +61,7 @@ impl Indexer {
         c * radius_km
     }
 
-    fn find_closest_resort(
+    pub fn find_closest_resort(
         &self,
         lat: f32,
         lon: f32,

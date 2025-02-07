@@ -69,10 +69,18 @@ async fn tour(Json(payload): Json<TourRequest>) -> Json<TourResponse> {
 
 #[cfg(test)]
 mod test {
+    use crate::parser::Resort;
+
     use super::*;
     use axum::body::Body;
     use axum::http::Request;
     use tower::ServiceExt;
+
+    fn create_test_resort(lon: f32, lat: f32) -> Resort {
+        let mut res = Resort::default();
+        res.coordinates = vec![lon.to_string(), lat.to_string()];
+        res
+    }
 
     #[tokio::test]
     async fn test_root() {
@@ -117,18 +125,26 @@ mod test {
         let lat = 39.6048786;
         let lon = -106.5150017;
 
-        
         let delta = 0.0001;
         let resorts = INDEXER.find_in_bounds(
-            lon - delta,  // min_lon 
-            lat - delta,  // min_lat
-            lon + delta,  // max_lon
-            lat + delta   // max_lat
+            lon - delta, // min_lon
+            lat - delta, // min_lat
+            lon + delta, // max_lon
+            lat + delta, // max_lat
         );
-    
+
         assert_eq!(resorts.len(), 1, "Should find exactly one resort");
         assert_eq!(resorts[0].Resort, "Beaver Creek");
     }
 
+    #[tokio::test]
+    async fn test_closest_resort() {
+        let resort1 = create_test_resort(-105.7827088, 39.87161425);
+        let resort2 = create_test_resort(-105.0749801, 39.3977612);
+        let resort3 = create_test_resort(-72.9109334, 43.0428562);
 
+        let resort_vec = vec![resort1, resort2, resort3];
+        let closest_resort = INDEXER.find_closest_resort(-105.8, 39.9, resort_vec);
+        assert_eq!(closest_resort.coordinates, vec!["-105.78271", "39.871613"]);
+    }
 }
