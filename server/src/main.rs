@@ -74,7 +74,6 @@ mod test {
     use axum::http::Request;
     use tower::ServiceExt;
 
-
     #[tokio::test]
     async fn test_root() {
         let app = create_router();
@@ -118,15 +117,14 @@ mod test {
         let lat = 39.6048786;
         let lon = -106.5150017;
 
-        
         let delta = 0.0001;
         let resorts = INDEXER.find_in_bounds(
-            lon - delta,  // min_lon 
-            lat - delta,  // min_lat
-            lon + delta,  // max_lon
-            lat + delta   // max_lat
+            lon - delta, // min_lon
+            lat - delta, // min_lat
+            lon + delta, // max_lon
+            lat + delta, // max_lat
         );
-    
+
         assert_eq!(resorts.len(), 1, "Should find exactly one resort");
         assert_eq!(resorts[0].Resort, "Beaver Creek");
     }
@@ -142,4 +140,4 @@ mod test {
 
         assert_eq!(resorts.len(), 12);
     }
-    }
+}

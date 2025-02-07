@@ -1,9 +1,7 @@
 use crate::parser::{Parser, Resort};
 use crate::WrappedF32::WrappedF32;
-use std::collections::HashMap;
 use rstar::{Point, RTree, RTreeObject, AABB};
-
-
+use std::collections::HashMap;
 
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub struct Coordinate {
@@ -11,11 +9,38 @@ pub struct Coordinate {
     pub lat: f32,
 }
 
-
 pub struct Indexer {
-    tree: RTree<Resort>
+    tree: RTree<Resort>,
 }
 
+impl Indexer {
+    pub fn find_in_bounds(
+        &self,
+        min_lon: f32,
+        min_lat: f32,
+        max_lon: f32,
+        max_lat: f32,
+    ) -> Vec<Resort> {
+        let envelope = AABB::from_corners(
+            Coordinate {
+                lon: min_lon,
+                lat: min_lat,
+            },
+            Coordinate {
+                lon: max_lon,
+                lat: max_lat,
+            },
+        );
+        self.tree.locate_in_envelope(&envelope).cloned().collect()
+    }
+}
+
+impl From<Parser> for Indexer {
+    fn from(parser: Parser) -> Self {
+        let tree = RTree::bulk_load(parser.resorts);
+        Indexer { tree }
+    }
+}
 
 impl Point for Coordinate {
     type Scalar = f32;
@@ -45,7 +70,6 @@ impl Point for Coordinate {
     }
 }
 
-
 impl RTreeObject for Resort {
     type Envelope = AABB<Coordinate>;
 
@@ -54,29 +78,5 @@ impl RTreeObject for Resort {
         let lat: f32 = self.coordinates[1].parse().unwrap();
         let point = Coordinate { lon, lat };
         AABB::from_point(point)
-    }
-}
-
-
-impl Indexer {
-    pub fn find_in_bounds(
-        &self,
-        min_lon: f32,
-        min_lat: f32,
-        max_lon: f32,
-        max_lat: f32,
-    ) -> Vec<Resort> {
-        let envelope = AABB::from_corners(
-            Coordinate { lon: min_lon, lat: min_lat },
-            Coordinate { lon: max_lon, lat: max_lat },
-        );
-        self.tree.locate_in_envelope(&envelope).cloned().collect()
-    }
- }
-
-impl From<Parser> for Indexer {
-    fn from(parser: Parser) -> Self {
-        let tree = RTree::bulk_load(parser.resorts);
-        Indexer { tree }
     }
 }
