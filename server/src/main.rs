@@ -74,6 +74,7 @@ mod test {
     use axum::http::Request;
     use tower::ServiceExt;
 
+
     #[tokio::test]
     async fn test_root() {
         let app = create_router();
@@ -130,5 +131,15 @@ mod test {
         assert_eq!(resorts[0].Resort, "Beaver Creek");
     }
 
+    #[tokio::test]
+    async fn find_all_in_colorado() {
+        let resorts = INDEXER.find_in_bounds(
+            -109.051, // min_lon
+            36.993,   // min_lat
+            -102.041, // max_lon
+            41.003,   // max_lat
+        );
 
-}
+        assert_eq!(resorts.len(), 12);
+    }
+    }
