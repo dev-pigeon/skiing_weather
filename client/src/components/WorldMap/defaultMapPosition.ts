@@ -1,1 +1,0 @@
-export const defaultMapPosition = { latitude: 40.62037, longitude: -104.996134, zoom: 10, };
