@@ -16,7 +16,12 @@ interface WeatherData {
   now: Now;
 }
 
-const WeatherCardHook = () => {
+export interface useWeatherCard {
+  requestWeatherData: (lat: number, lon: number) => void;
+  weatherData: WeatherData | undefined;
+}
+
+const WeatherCardHook = (): useWeatherCard => {
   const [weatherData, setWeatherData] = useState<WeatherData | undefined>();
   const url = "https://api.open-meteo.com/v1/forecast";
 
@@ -110,7 +115,7 @@ const WeatherCardHook = () => {
       snowfall: response.current()!.variables(4)?.value()!,
     };
 
-    const actualNow: Now = parseCurrentWeather(now, hourlyWeather.is_day);
+    const actualNow: Now = parseCurrentWeather(now);
 
     const newData: WeatherData = {
       dailyWeather: dailyWeather,

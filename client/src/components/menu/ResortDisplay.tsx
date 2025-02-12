@@ -4,7 +4,7 @@ import SeasonPricing from "./SeasonPricing";
 import SlopesLifts from "./SlopesLifts";
 import ResortFeatures from "./ResortFeatures";
 import MountainStats from "./MountainStats";
-import WeatherCard from "./WeatherCard";
+import WeatherCard from "./WeatherCard/WeatherCard";
 
 interface ResortDisplay {
   currentResort: SkiResort;
