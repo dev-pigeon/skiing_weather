@@ -2,7 +2,6 @@ import { useState } from "react";
 import { fetchWeatherApi } from "openmeteo";
 import {
   DailyWeatherAPIResponse,
-  Day,
   HourlyWeatherAPIResponse,
   Now,
   NowWeatherAPIResponse,
@@ -125,21 +124,6 @@ const WeatherCardHook = (): useWeatherCard => {
     };
 
     setWeatherData(newData);
-  };
-
-  const parseDays = (dailyResponse: DailyWeatherAPIResponse) => {
-    const numParams = 8;
-    let days: Day[] = [];
-    // get the current date String (Month day with DayJS), and subtract by one
-    // create a weather object factory
-    for (let i = 0; i < numParams; ++i) {
-      // each iteration creates a day
-      // date is initDate + 1 day
-      // date descriptor (can get from day JS object)
-      // cloud cover will use switch
-      // max and min temp are easy
-      // the booleans will be determined later
-    }
   };
 
   return {

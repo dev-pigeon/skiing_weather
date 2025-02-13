@@ -1,10 +1,6 @@
 import { Now, NowWeatherAPIResponse } from "./WeatherInterfaces";
 import dayjs from "dayjs";
 
-// TO DO
-    // create box for hourly forcast
-    // create hour cards
-    // fill in hourly box
 
 export function parseCurrentWeather(currentWeather : NowWeatherAPIResponse) {
     const is_day = getIsDay();
@@ -14,7 +10,6 @@ export function parseCurrentWeather(currentWeather : NowWeatherAPIResponse) {
     const snowCondition = getSnowCondition(currentWeather.snowfall, "Now");
     const displayConditionText = getDisplayCondition(rainCondition, sunConditions, snowCondition);
     const displayIconTitle = getDisplayIcon(sunConditions, rainCondition, snowCondition, is_day);
-    console.log(`icon / png name = ${displayIconTitle}`)
     const current_weather : Now = {
         temp : currentTemp,
         display_label : displayConditionText,
@@ -34,7 +29,7 @@ function getDisplayIcon(sun : string, rain : string, snow : string, day : boolea
    if(snow != "No Snow") {
     return "Snow"
    } else if(rain != "No Rain") {
-    return getRainIconTitle(rain, day);
+    return getRainIconTitle(rain);
    } else if(sun == "Partly Sunny" || sun == "Partly Cloudy") {
         return getPartlyIcon(rain, snow);
     } else if(sun == "Cloudy") {
@@ -43,8 +38,7 @@ function getDisplayIcon(sun : string, rain : string, snow : string, day : boolea
     return day ? "ClearSkiesDay" : "ClearSkiesNight"
 }
 
-function getRainIconTitle (rain : string, day : boolean) {
-    const adornment = day ? "Day" : "Night"; // add to return once have day/night rain icons
+function getRainIconTitle (rain : string) {
     switch(rain) {
         case "Heavy Rain":
             return "HeavyRain";
