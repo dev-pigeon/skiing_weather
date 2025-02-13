@@ -10,7 +10,7 @@ interface MountainStats {
 
 const MountainStats = ({ currentResort }: MountainStats) => {
   return (
-    <MenuCard title="Mountain Stats">
+    <MenuCard divider title="Mountain Stats">
       <Box paddingTop={2}>
         <TextItem
           title="Highest Point: "

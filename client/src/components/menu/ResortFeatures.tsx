@@ -12,7 +12,7 @@ interface ResortFeatures {
 
 const ResortFeatures = ({ currentResort }: ResortFeatures) => {
   return (
-    <MenuCard title="Resort Features">
+    <MenuCard divider title="Resort Features">
       <Box paddingTop={2}>
         <TextItem
           title="Night Skiing: "

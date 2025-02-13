@@ -4,9 +4,15 @@ import { Card, CardContent, Divider, Typography } from "@mui/material";
 interface MenuCard {
   sx?: object;
   title?: string;
+  divider?: boolean;
 }
 
-const MenuCard = ({ children, sx, title }: PropsWithChildren<MenuCard>) => {
+const MenuCard = ({
+  children,
+  sx,
+  title,
+  divider,
+}: PropsWithChildren<MenuCard>) => {
   const [isMouseOver, setIsMouseOver] = useState<boolean>(false);
 
   return (
@@ -26,8 +32,8 @@ const MenuCard = ({ children, sx, title }: PropsWithChildren<MenuCard>) => {
       }}
     >
       <CardContent>
-        <Typography variant="h6">{title}</Typography>
-        <Divider sx={{ bgcolor: "black" }} />
+        {title && <Typography variant="h6">{title}</Typography>}
+        {divider && <Divider sx={{ bgcolor: "black" }} />}
         {children}
       </CardContent>
     </Card>
