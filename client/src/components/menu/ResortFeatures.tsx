@@ -4,7 +4,6 @@ import MenuCard from "./MenuCard";
 import TextItem from "./TextItem";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import AcUnitIcon from "@mui/icons-material/AcUnit";
 import DownhillSkiingOutlinedIcon from "@mui/icons-material/DownhillSkiingOutlined";
 
 interface ResortFeatures {
@@ -15,12 +14,6 @@ const ResortFeatures = ({ currentResort }: ResortFeatures) => {
   return (
     <MenuCard divider title="Resort Features">
       <Box paddingTop={2}>
-        <TextItem
-          whiteSpace="nowrap"
-          title="Snow Cannons: "
-          data={currentResort["Snow cannons"]}
-          icon={<AcUnitIcon sx={{ fill: "blue" }} />}
-        />
         <TextItem
           title="Night Skiing: "
           data={""}
