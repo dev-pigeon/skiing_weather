@@ -15,6 +15,7 @@ export interface NowWeatherAPIResponse {
   sunshine_duration : number,
   wind_speed : number,
   snowfall : number,
+  weather_code : number,
 }
 
 export interface HourlyWeatherAPIResponse {

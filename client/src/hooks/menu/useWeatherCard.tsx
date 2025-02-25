@@ -34,6 +34,7 @@ const WeatherCardHook = (): useWeatherCard => {
         "sunshine_duration",
         "wind_speed_10m",
         "snowfall",
+        "weather_code",
       ],
       hourly: [
         "temperature_2m",
@@ -112,6 +113,7 @@ const WeatherCardHook = (): useWeatherCard => {
       sunshine_duration: response.current()!.variables(2)?.value()!,
       wind_speed: response.current()!.variables(3)?.value()!,
       snowfall: response.current()!.variables(4)?.value()!,
+      weather_code: response.current()!.variables(5)?.value()!,
     };
 
     const actualNow: Now = parseCurrentWeather(now);

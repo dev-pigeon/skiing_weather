@@ -5,11 +5,8 @@ import dayjs from "dayjs";
 export function parseCurrentWeather(currentWeather : NowWeatherAPIResponse) {
     const is_day = getIsDay();
     const currentTemp = parseInt(currentWeather.temp.toFixed(0));
-    const sunConditions = getSunshineClass(currentWeather.sunshine_duration, "Now", is_day); // use for icon
-    const rainCondition = getRainConditions(currentWeather.rain, "Now");
-    const snowCondition = getSnowCondition(currentWeather.snowfall, "Now");
-    const displayConditionText = getDisplayCondition(rainCondition, sunConditions, snowCondition);
-    const displayIconTitle = getDisplayIcon(sunConditions, rainCondition, snowCondition, is_day);
+    const displayConditionText = getWeatherDescription(currentWeather.weather_code);
+    const displayIconTitle = getIconTitle(currentWeather.weather_code, is_day);
     const current_weather : Now = {
         temp : currentTemp,
         display_label : displayConditionText,
@@ -18,111 +15,100 @@ export function parseCurrentWeather(currentWeather : NowWeatherAPIResponse) {
     return current_weather;
 }
 
+
+
 function getIsDay() {
     // assume day starts at 6am and ends at 6pm
     const hour = dayjs().hour();
-    console.log(hour);
     return (hour >= 6 && hour <= 18);
 }
 
-function getDisplayIcon(sun : string, rain : string, snow : string, day : boolean) {
-   if(snow != "No Snow") {
-    return "Snow"
-   } else if(rain != "No Rain") {
-    return getRainIconTitle(rain);
-   } else if(sun == "Partly Sunny" || sun == "Partly Cloudy") {
-        return getPartlyIcon(rain, snow);
-    } else if(sun == "Cloudy") {
-        return getCloudyIcon(rain, snow);
-    }
-    return day ? "ClearSkiesDay" : "ClearSkiesNight"
-}
-
-function getRainIconTitle (rain : string) {
-    switch(rain) {
-        case "Heavy Rain":
-            return "HeavyRain";
-        case "Rain":
-            return "Rain";
-    }
-    return "LightRain";
-} 
-
-function getCloudyIcon(rain : string, snow : string) {
-    if(snow != "No Snow") {
-        return "CloudlySnowing"
+function getIconTitle(weatherCode : number, is_day : boolean) {
+   if(weatherCode == 0 || weatherCode == 1) {
+    return is_day ? "ClearSkiesDay" : "ClearSkiesNight";
    }
-   if(rain != "No Rain") {
-       return "CloudlyRaining"
-   } 
-   return "Cloudy"
+
+   if(weatherCode == 3) {
+    return "Cloudy";
+   }
+ 
+   if(weatherCode == 2){
+    return is_day ? "PartlyCloudyDay" : "PartlyCloudlyNight"
+   }
+
+   if(weatherCode == 53 || weatherCode == 63 || weatherCode == 81) {
+    return "Rain";
+   }
+
+   if(weatherCode == 51 || weatherCode == 61 || weatherCode == 80) {
+    return "LightRain";
+   }
+   
+   if(weatherCode == 55 || weatherCode == 65 || weatherCode == 82) {
+    return "HeavyRain";
+   }
+
+   if(weatherCode == 71 || weatherCode == 73 || weatherCode == 75 || weatherCode == 77 || weatherCode == 85 || weatherCode == 86) {
+    return "Snow";
+   }
+   return "";
 }
 
-function getPartlyIcon(rain : string, snow : string) {
-    if(snow != "No Snow") {
-         return "PartlyCloudlySnowing"
-    }
-    if(rain != "No Rain") {
-        return "PartlyCloudlyRaining"
-    } 
-    return "PartlyCloudy"
-}
-// this function will determine sun conditions
-// default is for current time (15 mins) 
-// tm = 4 is an hour, tm=96 is for a day
-function getSunshineClass(sunDuration : number, type : "Now" | "Hour" | "Day", day : boolean) : string {
-        const multiplier = getMultiplier(type);
-        if((sunDuration >= (12 * multiplier)) || !day) {
-         return "Clear Skies"
-        } else if((sunDuration >= (8 * multiplier) && sunDuration <= ((11 * multiplier)))) {
-         return "Partly Sunny"
-        } else if(sunDuration >=(4 * multiplier) && sunDuration <=(7 * multiplier)) {
-         return "Partly Cloudy"
-        } 
-        return "Cloudy"
-}
 
-function getRainConditions(rainMM : number, type : "Now" | "Hour" | "Day") {
-    const multiplier = getMultiplier(type);
-    if(rainMM >= (4 * multiplier)) {
-        return "Heavy Rain";
-    } else if(rainMM >= (1.1 * multiplier) && rainMM < (4 * multiplier)) {
-        return "Rain";
-    } else if(rainMM >= (.1 * multiplier) && rainMM <= (1 * multiplier)) {
-        return "Light Rain"
-    }
-    return "No Rain";
-}
 
-function getSnowCondition(snowCM : number,  type : "Now" | "Hour" | "Day") {
-    const multiplier = getMultiplier(type);
-  
-    if(snowCM >= (3 * multiplier)) {
-        return "Heavy Snow"
-    } else if(snowCM >= (1 * multiplier) && snowCM < (3 * multiplier)) {
-        return "Snow"
-    } else if(snowCM >= (.1 * multiplier) && snowCM < (1 * multiplier)) {
-        return "Light Snow"
-    } 
-    return "No Snow";
-}
-
-function getDisplayCondition(rainCondition : string, sunCondition : string, snowCondition : string) {
-    if(snowCondition != "No Snow") {
-        return snowCondition;
+function getWeatherDescription(weatherCode : number) {
+    console.log(`weather code ${weatherCode}`)
+    switch(weatherCode) {
+        case 0:
+            return "Clear Sky";
+        case 1:
+            return "Clear Sky"
+        case 2:
+            return "Partly Cloudly";
+        case 3:
+            return "Overcast";
+        case 45:
+            return "Foggy";
+        case 48:
+            return "Foggy";
+        case 51:
+            return "Light Drizzle";
+        case 53:
+            return "Moderate Drizzle";
+        case 55:
+            return "Heavy Drizzle";
+        case 61:
+            return "Light Rain";
+        case 63:
+            return "Moderate Rain";
+        case 65:
+            return "Heavy Rain";
+        case 66:
+            return "Freezing Rain";
+        case 67:
+            return "Freezing Rain";
+        case 71:
+            return "Light Snow";
+        case 73:
+            return "Moderate Snow";
+        case 75:
+            return "Heavy Snow";
+        case 77:
+            return "Snow Grains";
+        case 80:
+            return "Light Showers";
+        case 81:
+            return "Moderate Showers";
+        case 82:
+            return "Heavy Showers";
+        case 85:
+            return "Light Snow";
+        case 86:
+            return "Heavy Snow";
+        case 95:
+            return "Thunderstorm";
+        case 16:
+            return "Windy";
     }
-   else if(rainCondition != "No Rain") {
-        return rainCondition;
-    }
-    return sunCondition;
-}
-
-function getMultiplier(type : "Now" | "Hour" | "Day") : number {
-    switch(type) {
-        case "Now":
-            return 1;
-        case "Hour":
-            return 4
-    }
-    return 96;
+    return "";
 }
