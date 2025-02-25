@@ -7,6 +7,7 @@ export interface DailyWeatherAPIResponse {
     precipitation_probability_max: number[];
     wind_speed_10m_max: number[];
     wind_gusts_10m_max: number[];
+    weather_code : number[];
 }
 
 export interface NowWeatherAPIResponse {
@@ -44,24 +45,10 @@ export interface HourlyWeather {
 
 export interface Day {
     date: string;
-    dateDescriptor:
-      | "Today"
-      | "Tomorrow"
-      | "Monday"
-      | "Tuesday"
-      | "Wedneday"
-      | "Thursday"
-      | "Friday"
-      | "Saturday"
-      | "Sunday";
-    cloud_cover: "Clear Sky" | "Partly Cloudly" | "Partly Sunny" | "Overcast";
+    dateDescriptor: string,
     max_temp: number;
     min_temp: number;
-    sunny: boolean;
-    rainy: boolean;
-    snowy: boolean;
-    foggy: boolean;
-    windy: boolean;
+    iconTitle : string,
   }
 
   export interface Now {

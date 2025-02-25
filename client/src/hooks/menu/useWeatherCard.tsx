@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { fetchWeatherApi } from "openmeteo";
 import {
+  DailyWeather,
   DailyWeatherAPIResponse,
   HourlyWeatherAPIResponse,
   Now,
   NowWeatherAPIResponse,
 } from "./WeatherInterfaces";
-import { parseCurrentWeather } from "./WeatherParser";
+import { parseCurrentWeather, parseDailyWeather } from "./WeatherParser";
 
 interface WeatherData {
-  dailyWeather: DailyWeatherAPIResponse;
+  dailyWeather: DailyWeather;
   hourlyWeather: HourlyWeatherAPIResponse;
   currentWeather: NowWeatherAPIResponse;
   now: Now;
@@ -59,6 +60,7 @@ const WeatherCardHook = (): useWeatherCard => {
         "precipitation_probability_max",
         "wind_speed_10m_max",
         "wind_gusts_10m_max",
+        "weather_code",
       ],
       temperature_unit: "fahrenheit",
       timezone: "auto",
@@ -68,8 +70,8 @@ const WeatherCardHook = (): useWeatherCard => {
     const response = responses[0];
 
     const dailyWeather: DailyWeatherAPIResponse = {
-      min_temp: Array.from(response.daily()!.variables(0)?.valuesArray()!),
-      max_temp: Array.from(response.daily()!.variables(1)?.valuesArray()!),
+      min_temp: Array.from(response.daily()!.variables(1)?.valuesArray()!),
+      max_temp: Array.from(response.daily()!.variables(0)?.valuesArray()!),
       min_feel_temp: Array.from(response.daily()!.variables(2)?.valuesArray()!),
       max_feel_temp: Array.from(response.daily()!.variables(3)?.valuesArray()!),
       showers_sum: Array.from(response.daily()!.variables(4)?.valuesArray()!),
@@ -82,6 +84,7 @@ const WeatherCardHook = (): useWeatherCard => {
       wind_gusts_10m_max: Array.from(
         response.daily()!.variables(7)?.valuesArray()!
       ),
+      weather_code: Array.from(response.daily()!.variables(8)?.valuesArray()!),
     };
 
     const hourlyWeather: HourlyWeatherAPIResponse = {
@@ -117,9 +120,10 @@ const WeatherCardHook = (): useWeatherCard => {
     };
 
     const actualNow: Now = parseCurrentWeather(now);
+    const daily = parseDailyWeather(dailyWeather);
 
     const newData: WeatherData = {
-      dailyWeather: dailyWeather,
+      dailyWeather: daily,
       hourlyWeather: hourlyWeather,
       currentWeather: now,
       now: actualNow,

@@ -1,4 +1,4 @@
-import { Now, NowWeatherAPIResponse } from "./WeatherInterfaces";
+import { DailyWeather, DailyWeatherAPIResponse, Day, Now, NowWeatherAPIResponse } from "./WeatherInterfaces";
 import dayjs from "dayjs";
 
 
@@ -13,6 +13,27 @@ export function parseCurrentWeather(currentWeather : NowWeatherAPIResponse) {
         icon_title: displayIconTitle,
     }
     return current_weather;
+}
+
+export function parseDailyWeather(dailyWeather : DailyWeatherAPIResponse) {
+   const days : Day[] = [];
+   const dayobj = dayjs();
+    for(let i = 1; i < 7; ++i) {
+        const date = dayobj.add(i, "day").format("MMMM D");
+        const dateName = dayobj.add(i, "day").format("dddd");
+        const day : Day = {
+            date : date,
+            dateDescriptor : dateName,
+            max_temp : dailyWeather.max_temp[i],
+            min_temp : dailyWeather.min_temp[i],
+            iconTitle : getIconTitle(dailyWeather.weather_code[i], true)
+        }
+        days.push(day);
+    }
+    const daily : DailyWeather = {
+        days : days,
+    }
+    return daily;
 }
 
 
