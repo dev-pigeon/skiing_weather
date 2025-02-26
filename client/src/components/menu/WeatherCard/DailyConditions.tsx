@@ -3,16 +3,7 @@ import WeatherIcon from "./WeatherIcon";
 
 interface DailyConditions {
   monthDay: string;
-  dateTitle:
-    | "Today"
-    | "Tomorrow"
-    | "Monday"
-    | "Tuesday"
-    | "Wednesday"
-    | "Thursday"
-    | "Friday"
-    | "Saturday"
-    | "Sunday";
+  dateTitle: string;
   iconTitle: string;
   maxTemp: string | number;
   minTemp: string | number;
@@ -28,18 +19,20 @@ const DailyConditions = ({
   return (
     <Stack
       direction={"row"}
-      spacing={4.25}
+      spacing={5}
       justifyContent={"cener"}
       alignItems={"center"}
     >
-      <Stack direction={"column"}>
+      <Stack direction={"column"} sx={{ width: "40px" }}>
         <Typography color="grey" whiteSpace={"nowrap"} fontSize={10}>
           {monthDay}
         </Typography>
-        <Typography fontSize={12}>{dateTitle}</Typography>
+        <Typography whiteSpace={"nowrap"} fontSize={12}>
+          {dateTitle}
+        </Typography>
       </Stack>
 
-      <Stack direction={"row"} spacing={1}>
+      <Stack direction={"row"} spacing={2}>
         <WeatherIcon name={iconTitle} />
         <Typography fontSize={14}>{`${maxTemp}°`}</Typography>
         <Typography color="grey" fontSize={14}>{`${minTemp}°`}</Typography>
