@@ -98,6 +98,10 @@ function getIconTitle(weatherCode : number, is_day : boolean) {
    if(weatherCode == 71 || weatherCode == 73 || weatherCode == 75 || weatherCode == 77 || weatherCode == 85 || weatherCode == 86) {
     return "Snow";
    }
+   if(weatherCode == 45 || weatherCode == 48) {
+    return "Fog";
+   }
+   console.log(`Could not determine icon title for weather code: ${weatherCode}`)
    return "";
 }
 
