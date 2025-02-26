@@ -1,5 +1,5 @@
-import { DailyWeather, DailyWeatherAPIResponse, Day, Now, NowWeatherAPIResponse } from "./WeatherInterfaces";
-import dayjs from "dayjs";
+import {  DailyWeatherAPIResponse, Day, Hour, HourlyWeatherAPIResponse, Now, NowWeatherAPIResponse } from "./WeatherInterfaces";
+import dayjs, { Dayjs } from "dayjs";
 
 
 export function parseCurrentWeather(currentWeather : NowWeatherAPIResponse) {
@@ -13,6 +13,35 @@ export function parseCurrentWeather(currentWeather : NowWeatherAPIResponse) {
         icon_title: displayIconTitle,
     }
     return current_weather;
+}
+
+export function parseHourlyWeather(hourlyWeather : HourlyWeatherAPIResponse) {
+
+    const now = dayjs();
+    const hours : Hour[] = [];
+    const roundedTime = roundToNearestHour(now)
+    for(let i = 0; i < 24; ++i) {
+        const time = roundedTime.add(i+1, "hour");
+        const day = getIsDay(time);
+        const weather_code = hourlyWeather.weather_code[i];
+        const iconTitle = getIconTitle(weather_code, day)
+        const temperature = hourlyWeather.temp[i].toFixed(0);
+
+
+        const hour : Hour = {
+            time : time.format("hh:mm a"),
+            iconTitle : iconTitle,
+            temperature : temperature
+        }
+        hours.push(hour);
+    }
+    return hours;
+}
+
+function roundToNearestHour(time : Dayjs) {
+    return time.minute() >= 30 
+        ? time.add(1, 'hour').startOf('hour')  // Round up
+        : time.startOf('hour');                // Round down
 }
 
 export function parseDailyWeather(dailyWeather : DailyWeatherAPIResponse) {
@@ -30,17 +59,14 @@ export function parseDailyWeather(dailyWeather : DailyWeatherAPIResponse) {
         }
         days.push(day);
     }
-    const daily : DailyWeather = {
-        days : days,
-    }
-    return daily;
+    return days;
 }
 
 
 
-function getIsDay() {
+function getIsDay(dayIn? : Dayjs) {
     // assume day starts at 6am and ends at 6pm
-    const hour = dayjs().hour();
+    const hour = dayIn ? dayIn.hour() : dayjs().hour();
     return (hour >= 6 && hour <= 18);
 }
 
@@ -78,7 +104,6 @@ function getIconTitle(weatherCode : number, is_day : boolean) {
 
 
 function getWeatherDescription(weatherCode : number) {
-    console.log(`weather code ${weatherCode}`)
     switch(weatherCode) {
         case 0:
             return "Clear Sky";

@@ -21,26 +21,9 @@ export interface NowWeatherAPIResponse {
 
 export interface HourlyWeatherAPIResponse {
   temp: number[];
-  precipitation_probability: number[];
-  precipitation: number[];
-  snowfall: number[];
-  snow_depth: number[];
-  cloud_cover: number[]; //percent
-  visibility: number[];
-  wind_speed_10m: number[];
-  wind_gusts_10m: number[];
-  rain : number[];
-  showers:number[];
-  is_day : number; // used for current weather
+  weather_code : number[];
 }
 
-export interface DailyWeather {
-    days : Day[]
-}
-
-export interface HourlyWeather {
-    hours : Hour[]
-}
 
 
 export interface Day {
@@ -61,11 +44,7 @@ export interface Day {
   
   export interface Hour {
     time: string;
-    condition: "Clear Sky" | "Parly Sunny" | "Parly Cloudy" | "Overcast";
-    sunny: boolean;
-    rainy: boolean;
-    snowy: boolean;
-    foggy: boolean;
-    windy: boolean;
+    iconTitle : string;
+    temperature : number | string;
   }
   

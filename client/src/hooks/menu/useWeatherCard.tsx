@@ -1,17 +1,22 @@
 import { useState } from "react";
 import { fetchWeatherApi } from "openmeteo";
 import {
-  DailyWeather,
   DailyWeatherAPIResponse,
+  Day,
+  Hour,
   HourlyWeatherAPIResponse,
   Now,
   NowWeatherAPIResponse,
 } from "./WeatherInterfaces";
-import { parseCurrentWeather, parseDailyWeather } from "./WeatherParser";
+import {
+  parseCurrentWeather,
+  parseDailyWeather,
+  parseHourlyWeather,
+} from "./WeatherParser";
 
 interface WeatherData {
-  dailyWeather: DailyWeather;
-  hourlyWeather: HourlyWeatherAPIResponse;
+  dailyWeather: Day[];
+  hourlyWeather: Hour[];
   currentWeather: NowWeatherAPIResponse;
   now: Now;
 }
@@ -50,6 +55,7 @@ const WeatherCardHook = (): useWeatherCard => {
         "rain",
         "showers",
         "is_day", // used for current time
+        "weather_code",
       ],
       daily: [
         "temperature_2m_max",
@@ -89,25 +95,9 @@ const WeatherCardHook = (): useWeatherCard => {
 
     const hourlyWeather: HourlyWeatherAPIResponse = {
       temp: Array.from(response.hourly()!.variables(0)?.valuesArray()!),
-      precipitation_probability: Array.from(
-        response.hourly()!.variables(1)?.valuesArray()!
+      weather_code: Array.from(
+        response.hourly()!.variables(10)?.valuesArray()!
       ),
-      precipitation: Array.from(
-        response.hourly()!.variables(2)?.valuesArray()!
-      ),
-      snowfall: Array.from(response.hourly()!.variables(3)?.valuesArray()!),
-      snow_depth: Array.from(response.hourly()!.variables(4)?.valuesArray()!),
-      cloud_cover: Array.from(response.hourly()!.variables(5)?.valuesArray()!),
-      visibility: Array.from(response.hourly()!.variables(6)?.valuesArray()!),
-      wind_speed_10m: Array.from(
-        response.hourly()!.variables(7)?.valuesArray()!
-      ),
-      wind_gusts_10m: Array.from(
-        response.hourly()!.variables(8)?.valuesArray()!
-      ),
-      rain: Array.from(response.hourly()!.variables(9)?.valuesArray()!),
-      showers: Array.from(response.hourly()!.variables(10)?.valuesArray()!),
-      is_day: Array.from(response.hourly()!.variables(11)?.valuesArray()!)[0],
     };
 
     const now: NowWeatherAPIResponse = {
@@ -120,11 +110,12 @@ const WeatherCardHook = (): useWeatherCard => {
     };
 
     const actualNow: Now = parseCurrentWeather(now);
+    const hourly: Hour[] = parseHourlyWeather(hourlyWeather);
     const daily = parseDailyWeather(dailyWeather);
 
     const newData: WeatherData = {
       dailyWeather: daily,
-      hourlyWeather: hourlyWeather,
+      hourlyWeather: hourly,
       currentWeather: now,
       now: actualNow,
     };

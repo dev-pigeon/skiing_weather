@@ -5,6 +5,7 @@ import WeatherCardHook from "../../../hooks/menu/useWeatherCard";
 import CurrentConditions from "./CurrentConditions";
 import DailyConditions from "./DailyConditions";
 import { Stack } from "@mui/material";
+import HourlyConditions from "./HourlyConditions";
 interface WeatherCard {
   currentResort: SkiResort;
 }
@@ -27,12 +28,27 @@ const WeatherCard = ({ currentResort }: WeatherCard) => {
           />
 
           <Stack
+            paddingTop={3}
+            paddingBottom={3}
+            direction={"row"}
+            spacing={2}
+            sx={{ overflowY: "hidden", overflowX: "scroll" }}
+          >
+            {useWeatherCard.weatherData.hourlyWeather.map((hour) => (
+              <HourlyConditions
+                temperature={hour.temperature}
+                time={hour.time}
+                iconTitle={hour.iconTitle}
+              />
+            ))}
+          </Stack>
+          <Stack
             direction={"column"}
             spacing={1}
             height={90}
             sx={{ overflowX: "hidden", overflowY: "scroll" }}
           >
-            {useWeatherCard.weatherData.dailyWeather.days.map((day) => (
+            {useWeatherCard.weatherData.dailyWeather.map((day) => (
               <DailyConditions
                 monthDay={day.date}
                 dateTitle={day.dateDescriptor}
