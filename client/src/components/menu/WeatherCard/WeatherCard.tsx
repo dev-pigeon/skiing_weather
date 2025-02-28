@@ -21,7 +21,7 @@ const WeatherCard = ({ currentResort }: WeatherCard) => {
   return (
     <div>
       {useWeatherCard.weatherData && (
-        <MenuCard sx={{ width: 220 }}>
+        <MenuCard sx={{ width: 220, height: 315 }}>
           <CurrentConditions
             useWeatherCard={useWeatherCard}
             currentResort={currentResort}
