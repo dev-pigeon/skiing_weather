@@ -37,7 +37,7 @@ export const MenuContainer = ({
         gap={1}
         component={MenuPaper}
         sx={{
-          width: "33vw",
+          width: 550,
           overflow: "auto",
           height: "auto",
           minWidth: 150,
